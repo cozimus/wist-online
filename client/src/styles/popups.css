@@ -1,0 +1,76 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.popup-inner {
+  position: relative;
+  padding: 1vw;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.call-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+.call-popup-inner,
+.call-popup-inner input,
+.call-popup-inner label,
+.call-popup-inner form {
+  position: relative;
+  padding: 1vw;
+  font-size: 4vh;
+  background-color: white;
+}
+.call-popup-inner input::-webkit-outer-spin-button,
+.call-popup-inner input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.call-popup-inner input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.last-turn-popup-container {
+  font-size: 2vw;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.laleo-cards {
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 1vw;
+}
+.laleo-cards .card {
+  cursor: pointer;
+}
+.laleo-cards .card.selected {
+  background-color: rgba(255, 255, 0, 0.5);
+}

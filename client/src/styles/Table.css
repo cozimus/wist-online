@@ -1,0 +1,83 @@
+.table-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table {
+  height: 100%;
+  width: 100%;
+}
+
+.table {
+  table-layout: fixed;
+  border: 1px solid black;
+}
+
+.table th {
+  border: 1px solid black;
+  font-size: min(3rem, 3vw, 5vh);
+}
+
+.table .black {
+  font-size: min(5rem, 5vw, 6vh);
+  color: black;
+}
+
+.table .red {
+  font-size: min(5rem, 5vw, 6vh);
+  color: red;
+}
+
+.table td {
+  border: 1px solid black;
+  font-size: min(3rem, 4vw, 5vh);
+}
+
+.table .name {
+  font-size: min(2vw, 4vh);
+  word-wrap: break-word;
+}
+
+.table .sup {
+  display: inline-block;
+  width: 100%;
+  line-height: 100%;
+  text-align: left;
+  padding-inline: 0.7vw;
+}
+.table .wrong {
+  color: red;
+}
+.table .guessed {
+  color: green;
+}
+
+.table .inf {
+  display: inline-block;
+  width: 100%;
+  line-height: 100%;
+  text-align: right;
+  padding-inline: 0.7vw;
+}
+
+.table .prese {
+  color: rgb(255, 166, 0);
+}
+
+.table .full {
+  display: block;
+  text-align: center;
+}
+
+td.diagonal {
+  background: linear-gradient(
+    to right bottom,
+    #ffffff 0%,
+    #ffffff 49.9%,
+    #000000 50%,
+    #000000 51%,
+    #ffffff 51.1%,
+    #ffffff 100%
+  );
+}

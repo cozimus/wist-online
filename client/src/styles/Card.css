@@ -1,0 +1,43 @@
+.card {
+  cursor: not-allowed;
+  position: relative;
+  height: var(--CARD-HEIGHT);
+  width: var(--CARD-WIDTH);
+  border: 1px solid black;
+  border-radius: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: calc(var(--CARD-HEIGHT) * 2 / 3);
+  background-color: white;
+}
+
+.card.red {
+  color: red;
+}
+
+.card.black {
+  color: black;
+}
+
+.card.valid {
+  cursor: pointer;
+}
+
+.card::before,
+.card::after {
+  position: absolute;
+  content: attr(data-value);
+  font-size: calc(var(--CARD-HEIGHT) * 1 / 7);
+}
+
+.card::before {
+  top: calc(var(--CARD-HEIGHT) * 1 / 20);
+  left: calc(var(--CARD-WIDTH) * 1 / 10);
+}
+
+.card::after {
+  bottom: calc(var(--CARD-HEIGHT) * 1 / 20);
+  right: calc(var(--CARD-WIDTH) * 1 / 10);
+  transform: rotate(180deg);
+}

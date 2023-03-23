@@ -1,0 +1,207 @@
+:root {
+  --CARD-WIDTH: clamp(35px, min(8.5vh, 5.3vw), 70px);
+  --CARD-HEIGHT: calc(var(--CARD-WIDTH) * 111 / 70);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: arial, sans-serif;
+}
+
+h1 {
+  font-size: clamp(40px, 12vh, 3.5rem);
+  padding-bottom: 10px;
+}
+
+h2 {
+  font-size: clamp(25px, 10vh, 3rem);
+  padding-top: 1vh;
+}
+
+ul {
+  font-size: clamp(20px, 7vh, 2rem);
+  padding-top: 1vh;
+}
+
+button {
+  cursor: pointer;
+}
+
+label {
+  font-size: 1.2rem;
+}
+
+input[type="text"] {
+  font-size: 1.2rem;
+  border: none;
+  border-bottom: 1px solid rgb(126, 126, 126);
+}
+
+.App {
+  width: 100vw;
+  height: 100vh;
+}
+
+.Homepage {
+  width: 100%;
+  height: 100%;
+  font-size: 36px;
+  display: grid;
+  grid-template-columns: 50vw 50vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.Homepage button,
+.WaitingRoom button {
+  font-size: 1.2rem;
+  padding: 6px 40px;
+  border-radius: 10%;
+}
+
+.homepageColumn {
+  display: inline-block;
+  /* border: 2px solid black; */
+  text-align: center;
+}
+
+.alignLeft {
+  display: inline-block;
+  text-align: left;
+}
+
+.WaitingRoom {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: 50vw 50vw;
+  align-items: center;
+}
+
+.Game {
+  user-select: none;
+  margin: 0;
+  display: grid;
+  grid-template-rows: 78vh 22vh;
+  grid-template-areas:
+    "opponent-side"
+    "player-side";
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+}
+
+.GameEnded {
+  background-color: yellow;
+}
+
+.UserCards {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.UserSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  grid-area: player-side;
+}
+
+.OpponentsSide {
+  display: grid;
+  grid-template-rows: 22vh 56vh;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-areas:
+    "top-hand top-hand top-hand top-hand top-hand top-hand"
+    "left-hand field field field field right-hand";
+  width: 100vw;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  overflow: clip;
+}
+
+.UserSide .user-turn-text {
+  height: calc(var(--CARD-WIDTH) / 2);
+  font-size: calc(var(--CARD-WIDTH) / 2);
+}
+
+.OpponentHand {
+  display: flex;
+  align-items: center;
+}
+
+.PlayedCards {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  grid-area: field;
+  justify-content: center;
+}
+
+.CardBack,
+.CardBack img {
+  height: var(--CARD-HEIGHT);
+  width: var(--CARD-WIDTH);
+}
+
+.CardBack.rotated,
+.CardBack.rotated img {
+  width: var(--CARD-HEIGHT);
+  height: var(--CARD-WIDTH);
+}
+
+.table-button {
+  padding: 0;
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid black;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  top: 5px;
+  right: 5px;
+  z-index: 3;
+}
+
+.new-game-button {
+  margin-top: 15px;
+  border-radius: 7px;
+  border: 1px solid black;
+  width: 100%;
+  height: min(20vh, 120px);
+  font-size: min(10vh, 60px);
+  z-index: 2;
+  background-color: rgb(110, 255, 255);
+}
+
+.last-turn-button {
+  padding: 0;
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid black;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  top: 5px;
+  left: 5px;
+  z-index: 3;
+}
+
+.laleo-button {
+  border-radius: 0;
+  border: 1px solid black;
+  border-radius: 7px;
+  width: 100%;
+  height: min(8vh, 50px);
+  font-size: min(4vh, 25px);
+  z-index: 2;
+  background-color: rgba(255, 255, 0, 0.5);
+}
