@@ -20,8 +20,7 @@ const PORT = process.env.PORT || 4000;
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    // origin: "http://localhost:3000",
-    origin: "*",
+    origin: ["http://localhost:3000", "https://wist-online.onrender.com"],
   },
 });
 

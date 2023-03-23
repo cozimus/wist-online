@@ -9,8 +9,8 @@ import GameEnded from "./components/Game/GameEnded.js";
 
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
-const socket = socketIO.connect("http://localhost:4000");
-// const socket = socketIO.connect('https://project-chat-application.herokuapp.com/');
+// const socket = socketIO.connect("http://localhost:4000");
+const socket = socketIO.connect("https://wist-online-api.onrender.com");
 
 function App() {
   const [users, setUsers] = useState([]);
