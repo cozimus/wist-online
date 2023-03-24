@@ -199,6 +199,7 @@ function distributeCards(numberOfPlayers, gameInfo) {
 
 function updateCall(call, playerId, roomId) {
   let gameInfo = gamesData.find((game) => game.roomId === roomId);
+  console.log(gamesData);
   //check if is a valid call
   let valid = false;
   let callSum =
