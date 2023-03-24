@@ -29,7 +29,7 @@ const ROUND_BRISCOLA = {
 const SMALLEST_CARD_MAP = {
   //players: smallest card
   // 1: 10,
-  // 2: 10,
+  2: 3,
   3: 9,
   4: 3,
   5: 5,
@@ -38,7 +38,7 @@ const SMALLEST_CARD_MAP = {
 const STARTING_CARDS_MAP = {
   //players: smallest card
   // 1: 10,
-  // 2: 10,
+  2: 8,
   3: 8,
   4: 12,
   5: 8,
@@ -120,7 +120,7 @@ function updateTurn(playedCard, playerId, roomId) {
 }
 
 async function endTurn(gameInfo) {
-  await sleep(600);
+  await sleep(2000);
   const winnerIndex = turnWinner(gameInfo);
 
   //save the last played cards
@@ -189,7 +189,9 @@ function distributeCards(numberOfPlayers, gameInfo) {
   const deckSmallestValue = SMALLEST_CARD_MAP[numberOfPlayers];
   let deck = new Deck(deckSmallestValue);
   deck.shuffle();
-  const startingCards = deck.numberOfCards / numberOfPlayers;
+
+  const startingCards = STARTING_CARDS_MAP[numberOfPlayers];
+
   gameInfo.players.forEach((player) => {
     player.playerHand = deck.startHand(startingCards);
   });

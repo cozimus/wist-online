@@ -30,7 +30,7 @@ const WaitingRoom = ({ users, socket }) => {
           </li>
         ))}
       </ul>
-      {isHost({ users, socket }) && allReady(users) && users.length >= 3 && (
+      {isHost({ users, socket }) && allReady(users) && users.length >= 2 && (
         <button
           onClick={() => {
             socket.emit("start-game", users);
