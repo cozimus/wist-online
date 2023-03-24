@@ -2,13 +2,6 @@ import CreateRoomForm from "./CreateRoomForm";
 import JoinRoomForm from "./JoinRoomForm";
 import { socket } from "../../socket";
 const Homepage = ({ userId }) => {
-  function connect() {
-    socket.connect();
-  }
-
-  function disconnect() {
-    socket.disconnect();
-  }
   return (
     <div className="Homepage">
       <div className="homepageColumn">
@@ -21,9 +14,6 @@ const Homepage = ({ userId }) => {
           <JoinRoomForm socket={socket} userId={userId}></JoinRoomForm>
         </div>
       </div>
-      <div>{userId}</div>
-      <button onClick={connect}>Connect</button>
-      <button onClick={disconnect}>Disconnect</button>
     </div>
   );
 };
