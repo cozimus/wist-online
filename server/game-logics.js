@@ -49,7 +49,7 @@ let gamesData = [];
 
 function gameSetup(usersData) {
   let gameInfo = new gameInfoTemplate(usersData[0].roomId);
-
+  console.log(gameInfo);
   const numberOfPlayers = usersData.length;
 
   const startingPositions = Array.from(Array(numberOfPlayers).keys());
