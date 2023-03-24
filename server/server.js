@@ -15,6 +15,7 @@ import {
   checkCurrentGame,
   endTurn,
   handleLaLeo,
+  clearRoom,
 } from "./game-logics.js";
 const PORT = process.env.PORT || 4000;
 const httpServer = createServer();
