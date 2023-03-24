@@ -8,6 +8,7 @@ class gameInfoTemplate {
     this.firstPlayedSuit = "";
     this.lastPlayedCards = [];
     this.laLeoCards = [];
+    this.gameReady = true;
   }
 }
 

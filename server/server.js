@@ -83,6 +83,8 @@ io.on("connection", (socket) => {
     io.in(gameInfo.roomId).emit("update-info", gameInfo);
     if (gameInfo.playedCards.length === gameInfo.players.length) {
       //if the turn is over, check who is the winner
+      gameInfo.gameReady = false;
+      io.in(gameInfo.roomId).emit("update-info", gameInfo);
       const round = await endTurn(gameInfo);
       io.in(gameInfo.roomId).emit("update-info", gameInfo);
       io.in(gameInfo.roomId).emit("write-table-prese", gameInfo);

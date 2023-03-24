@@ -78,7 +78,8 @@ const Game = ({ socket, gameInfo, pointsTable }) => {
         playerTurn={gameInfo.playerTurn}
         isLaLeoOver={(gameInfo.laLeoCards = [])}
         firstPlayedSuit={gameInfo.firstPlayedSuit}
-        isBuio={isBuio} //------------------------------------------------------------------------------------------ da cambiare
+        isBuio={isBuio}
+        gameReady={gameInfo.gameReady}
       ></UserSide>
     </div>
   );

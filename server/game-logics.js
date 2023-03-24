@@ -138,7 +138,7 @@ async function endTurn(gameInfo) {
   gameInfo.playedCards = [];
   gameInfo.firstPlayedSuit = "";
   gameInfo.playerTurn = 0;
-
+  gameInfo.gameReady = true;
   //check if the round is over
   if (
     gameInfo.players

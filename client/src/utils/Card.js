@@ -10,14 +10,11 @@ const Card = ({
   color,
   position,
 }) => {
-  let cardPlayed = false;
-
   function handleClick() {
     socket.emit("played-card", {
       value: value,
       suit: suit,
     });
-    cardPlayed = true;
   }
 
   function isSelected() {
@@ -54,7 +51,7 @@ const Card = ({
   return (
     <div
       onClick={
-        isPlayerTurn && isValidCard && !cardPlayed
+        isPlayerTurn && isValidCard
           ? handleClick
           : isLaLeo
           ? handleLaLeo

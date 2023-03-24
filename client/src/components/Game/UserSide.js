@@ -1,6 +1,5 @@
 import Card from "../../utils/Card";
 import "../../styles/Card.css";
-
 const UserSide = ({
   playerInfo,
   socket,
@@ -8,6 +7,7 @@ const UserSide = ({
   firstPlayedSuit,
   isLaLeoOver,
   isBuio,
+  gameReady,
 }) => {
   return (
     <div className="UserSide">
@@ -21,7 +21,9 @@ const UserSide = ({
               color={card.suit === "♣" || card.suit === "♠" ? "black" : "red"}
               socket={socket}
               isPlayerTurn={
-                playerTurn === playerInfo.roundPosition && isLaLeoOver
+                playerTurn === playerInfo.roundPosition &&
+                isLaLeoOver &&
+                gameReady
               }
               isValidCard={
                 playerInfo.playerHand.filter(
