@@ -23,8 +23,6 @@ const Game = ({ socket, gameInfo, pointsTable }) => {
       setIsWistTurn(true);
       socket.emit("call-selected", 0);
     }
-
-    console.log(gameInfo.round);
   }, [gameInfo.round]);
 
   return (
