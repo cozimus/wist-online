@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const JoinRoomForm = ({ socket }) => {
+const JoinRoomForm = ({ socket, userId }) => {
   const [joinName, setJoinName] = useState("");
   const [roomId, setRoomId] = useState("");
 
   const navigate = useNavigate();
   function handleJoinSubmit(e) {
     e.preventDefault();
-
     const userData = {
       userName: joinName,
-      userId: socket.id,
+      userId: userId,
       roomId: roomId,
+      socketId: socket.id,
       host: false,
       ready: true,
     };

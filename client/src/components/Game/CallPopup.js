@@ -1,9 +1,9 @@
 import "../../styles/popups.css";
 
-const CallPopup = ({ trigger, socket, setIsBuio, maxCall }) => {
+const CallPopup = ({ trigger, socket, setIsBuio, maxCall, userId }) => {
   function handleSubmit(e) {
     e.preventDefault();
-    socket.emit("call-selected", Number(e.target[0].value));
+    socket.emit("call-selected", Number(e.target[0].value), userId);
     setIsBuio(false);
   }
   return trigger ? (

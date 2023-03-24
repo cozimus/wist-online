@@ -1,16 +1,14 @@
 // import { Route } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { v4 as uuid } from "uuid";
+import { socket } from "./socket";
 import Homepage from "./components/Homepage/Homepage.js";
 import WaitingRoom from "./components/WaitingRoom/WaitingRoom.js";
 import Game from "./components/Game/Game.js";
-import socketIO from "socket.io-client";
 import TableTemplate from "./utils/TableTemplate.js";
 import GameEnded from "./components/Game/GameEnded.js";
 
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-
-// const socket = socketIO.connect("http://localhost:4000");
-const socket = socketIO.connect("https://wist-online-api.onrender.com");
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -18,6 +16,7 @@ function App() {
   const [gameInfo, setGameInfo] = useState({});
   const [pointsTable, setPointsTable] = useState([]);
   const [gameEnded, setGameEnded] = useState(false);
+  const [userId, setUserId] = useState(uuid().slice(0, 13));
 
   function createPointsTable(gameInfo) {
     const pointsTableTable = [];
@@ -149,19 +148,33 @@ function App() {
       window.location.href = "/";
     }
   }, []);
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    } else {
+      localStorage.setItem("userId", userId);
+    }
+  }, []);
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Homepage socket={socket} />}></Route>
+          <Route
+            path="/"
+            element={<Homepage socket={socket} userId={userId} />}
+          ></Route>
           <Route
             path="/:roomId"
             element={
               !gameStarted ? (
-                <WaitingRoom users={users} socket={socket} />
+                <WaitingRoom users={users} socket={socket} userId={userId} />
               ) : gameEnded ? (
                 <GameEnded
                   users={users}
+                  userId={userId}
                   socket={socket}
                   pointsTable={pointsTable}
                   setGameStarted={setGameStarted}
@@ -170,6 +183,7 @@ function App() {
               ) : (
                 <Game
                   socket={socket}
+                  userId={userId}
                   gameInfo={gameInfo}
                   pointsTable={pointsTable}
                 />

@@ -8,6 +8,7 @@ const UserSide = ({
   isLaLeoOver,
   isBuio,
   gameReady,
+  userId,
 }) => {
   return (
     <div className="UserSide">
@@ -30,6 +31,7 @@ const UserSide = ({
                   (handCard) => handCard.suit === firstPlayedSuit
                 ).length === 0 || card.suit === firstPlayedSuit
               }
+              userId={userId}
             ></Card>
           ))}
       </div>

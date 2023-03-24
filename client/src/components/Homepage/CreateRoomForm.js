@@ -2,17 +2,17 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 
-const CreateRoomForm = ({ socket }) => {
+const CreateRoomForm = ({ socket, userId }) => {
   const [hostName, setHostName] = useState("");
   const navigate = useNavigate();
   function handleCreateSubmit(e) {
     e.preventDefault();
     const roomId = uuid().slice(0, 11);
-
     const userData = {
       userName: hostName,
-      userId: socket.id,
+      userId: userId,
       roomId: roomId,
+      socketId: socket.id,
       host: true,
       ready: true,
     };

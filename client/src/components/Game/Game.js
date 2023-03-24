@@ -5,7 +5,7 @@ import CallPopup from "./CallPopup";
 import LastTurnPopup from "./LastTurnPopup";
 import LaLeoPopup from "./LaLeoPopup";
 import { useState, useEffect } from "react";
-const Game = ({ socket, gameInfo, pointsTable }) => {
+const Game = ({ socket, gameInfo, pointsTable, userId }) => {
   const [tableButtonPopup, setTableButtonPopup] = useState(false);
   const [lastTurnButtonPopup, setLastTurnButtonPopup] = useState(false);
   const [laLeoTrigger, setLaLeoTrigger] = useState(false);
@@ -21,7 +21,7 @@ const Game = ({ socket, gameInfo, pointsTable }) => {
     }
     if (gameInfo.round === 7) {
       setIsWistTurn(true);
-      socket.emit("call-selected", 0);
+      socket.emit("call-selected", 0, userId);
     }
   }, [gameInfo.round]);
 
@@ -53,33 +53,35 @@ const Game = ({ socket, gameInfo, pointsTable }) => {
           laLeoTrigger && !gameInfo.players.find((player) => player.call === "")
         }
         handCards={
-          gameInfo.players.find((player) => player.id === socket.id).playerHand
+          gameInfo.players.find((player) => player.id === userId).playerHand
         }
         socket={socket}
         setTrigger={setLaLeoTrigger}
+        userId={userId}
       ></LaLeoPopup>
       <CallPopup
         trigger={
-          gameInfo.players.find((player) => player.id === socket.id).call ===
-            "" &&
+          gameInfo.players.find((player) => player.id === userId).call === "" &&
           gameInfo.playerTurn ===
-            gameInfo.players.find((player) => player.id === socket.id)
+            gameInfo.players.find((player) => player.id === userId)
               .roundPosition &&
           !isWistTurn
         }
         socket={socket}
         setIsBuio={setIsBuio}
         maxCall={gameInfo.players.length === 4 ? 12 : 8}
+        userId={userId}
       ></CallPopup>
-      <OpponentsSide gameInfo={gameInfo} playerId={socket.id}></OpponentsSide>
+      <OpponentsSide gameInfo={gameInfo} playerId={userId}></OpponentsSide>
       <UserSide
-        playerInfo={gameInfo.players.find((player) => player.id === socket.id)}
+        playerInfo={gameInfo.players.find((player) => player.id === userId)}
         socket={socket}
         playerTurn={gameInfo.playerTurn}
-        isLaLeoOver={(gameInfo.laLeoCards = [])}
+        isLaLeoOver={gameInfo.laLeoCards.length === 0}
         firstPlayedSuit={gameInfo.firstPlayedSuit}
         isBuio={isBuio}
         gameReady={gameInfo.gameReady}
+        userId={userId}
       ></UserSide>
     </div>
   );

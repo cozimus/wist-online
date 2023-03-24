@@ -5,6 +5,7 @@ const GameEnded = ({
   setGameStarted,
   setGameEnded,
   users,
+  userId,
   socket,
 }) => {
   return (
@@ -17,6 +18,7 @@ const GameEnded = ({
         setGameEnded={setGameEnded}
         users={users}
         socket={socket}
+        userId={userId}
       ></TablePopup>
     </div>
   );

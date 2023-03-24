@@ -9,6 +9,7 @@ const TablePopup = ({
   setGameEnded,
   users,
   socket,
+  userId,
 }) => {
   return trigger ? (
     <div className="table-popup popup">
@@ -49,7 +50,7 @@ const TablePopup = ({
               socket.emit(
                 "update-users",
                 users.map((user) =>
-                  user.userId === socket.id
+                  user.userId === userId
                     ? {
                         ...user,
                         ready: true,
