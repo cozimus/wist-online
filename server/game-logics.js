@@ -120,7 +120,7 @@ function updateTurn(playedCard, playerId, roomId) {
 }
 
 async function endTurn(gameInfo) {
-  await sleep(2000);
+  await sleep(200);
   const winnerIndex = turnWinner(gameInfo);
 
   //save the last played cards
@@ -199,7 +199,12 @@ function distributeCards(numberOfPlayers, gameInfo) {
 
 function updateCall(call, playerId, roomId) {
   let gameInfo = gamesData.find((game) => game.roomId === roomId);
+  console.log("GAME DATA -----------");
   console.log(gamesData);
+  console.log("GAME INFO -----------");
+  console.log(gameInfo);
+  console.log("INPUT PARAMETERS (call, playerId, roomId");
+  console.log(call, playerId, roomId);
   //check if is a valid call
   let valid = false;
   let callSum =
