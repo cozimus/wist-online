@@ -119,6 +119,12 @@ function App() {
     socket.on("update-table-points", (gameInfo) => {
       setPointsTable((pointsTable) => updatePointsTable(pointsTable, gameInfo));
     });
+    socket.on("disconnect", () => {
+      console.log("Connection lost with socket  ", socket.id);
+    });
+    socket.on("connect", () => {
+      console.log("Connection established with socket  ", socket.id);
+    });
     return () => {
       socket.off("allUsers");
       socket.off("starting-game");
