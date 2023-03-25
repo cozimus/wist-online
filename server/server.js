@@ -39,7 +39,8 @@ io.on("connection", (socket) => {
   } else {
     console.log("CONNECT socket", socket.id);
   }
-  socket.on("disconnect", () => {
+  socket.on("disconnect", (reason) => {
+    console.log(reason);
     const roomId = getRoomBySocket(socket.id);
     const users = removeUserBySocket(socket.id);
     // if (playersInRoom(roomId) == null) {
