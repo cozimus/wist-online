@@ -119,7 +119,7 @@ function updateTurn(playedCard, playerId, roomId) {
 }
 
 async function endTurn(gameInfo) {
-  await sleep(200);
+  await sleep(2000);
   const winnerIndex = turnWinner(gameInfo);
 
   //save the last played cards
