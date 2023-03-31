@@ -44,7 +44,7 @@ const STARTING_CARDS_MAP = {
   5: 8,
   6: 8,
 };
-
+const waitingTime = process.env.NODE_ENV === "prodution" ? 2000 : 200;
 let gamesData = [];
 
 function gameSetup(usersData) {
@@ -119,7 +119,7 @@ function updateTurn(playedCard, playerId, roomId) {
 }
 
 async function endTurn(gameInfo) {
-  await sleep(2000);
+  await sleep(waitingTime);
   const winnerIndex = turnWinner(gameInfo);
 
   //save the last played cards
@@ -149,6 +149,8 @@ async function endTurn(gameInfo) {
     gameInfo.players.forEach((player) => {
       player.call = "";
       player.prese = 0;
+      player.roundPosition =
+        (player.firstRoundPosition + gameInfo.round) % gameInfo.players.length;
     });
     gameInfo.lastPlayedCards = [];
     distributeCards(gameInfo.players.length, gameInfo);
