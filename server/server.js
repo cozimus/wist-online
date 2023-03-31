@@ -135,4 +135,5 @@ io.on("connection", (socket) => {
 
 httpServer.listen(PORT, () => {
   console.log(`Server has started on port ${PORT}`);
+  console.log(`Server has started in environment ${process.env.NODE_ENV}`);
 });
