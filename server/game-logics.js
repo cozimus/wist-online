@@ -44,7 +44,15 @@ const STARTING_CARDS_MAP = {
   5: 8,
   6: 8,
 };
-const waitingTime = process.env.NODE_ENV === "prodution" ? 2000 : 200;
+const WIST_POINTS_MAP = {
+  2: 50,
+  3: 25,
+  4: 25,
+  5: 15,
+  6: 15,
+};
+const waitingTime = process.env.NODE_ENV === "production" ? 2000 : 200;
+console.log("waitingTime = ", waitingTime);
 let gamesData = [];
 
 function gameSetup(usersData) {
@@ -224,7 +232,7 @@ function computePoints(gameInfo) {
     let newPoints;
     if (player.prese === player.call) {
       if (player.call === 0) {
-        newPoints = 15;
+        newPoints = WIST_POINTS_MAP[gameInfo.players.length];
       } else {
         newPoints = player.prese * player.prese + 10;
       }
