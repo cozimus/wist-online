@@ -1,6 +1,6 @@
 import CardBack from "../../utils/CardBack";
 
-const OpponentHand = ({ playerHandLength, style, rotated }) => {
+const OpponentHand = ({ playerHandLength, rotated }) => {
   const cards = [];
   for (let i = 0; i < playerHandLength; i++) {
     cards.push(
@@ -12,11 +12,7 @@ const OpponentHand = ({ playerHandLength, style, rotated }) => {
     );
   }
 
-  return (
-    <div className="OpponentHand" style={style}>
-      {cards}
-    </div>
-  );
+  return <div className="OpponentHand">{cards}</div>;
 };
 
 export default OpponentHand;

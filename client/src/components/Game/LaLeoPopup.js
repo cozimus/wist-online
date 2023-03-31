@@ -7,6 +7,7 @@ const LaLeoPopup = ({ trigger, setTrigger, handCards, socket, userId }) => {
   return trigger ? (
     <div className="laleo-popup popup">
       <div className="popup-inner">
+        <span className="laleo-text">choose 2 cards to change</span>
         <div className="laleo-cards">
           {handCards.map((card, index) => (
             <Card

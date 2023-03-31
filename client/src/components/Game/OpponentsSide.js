@@ -9,8 +9,7 @@ const OpponentsSide = ({ gameInfo, playerId }) => {
       myComponentStyle = [
         {
           gridArea: "top-hand",
-          justifyContent: "center",
-          flexDirection: "row",
+          transform: "rotate(+0deg)",
         },
       ];
       rotated = [false];
@@ -19,54 +18,51 @@ const OpponentsSide = ({ gameInfo, playerId }) => {
       myComponentStyle = [
         {
           gridArea: "left-hand",
-          flexDirection: "column",
+          transform: "rotate(+90deg)",
         },
         {
           gridArea: "right-hand",
-          flexDirection: "column",
+          transform: "rotate(-90deg)",
         },
       ];
-      rotated = [true, true];
+      rotated = [false, false];
       break;
     case 4:
       myComponentStyle = [
         {
           gridArea: "left-hand",
-          flexDirection: "column",
+          transform: "rotate(+90deg)",
         },
         {
           gridArea: "top-hand",
-          justifyContent: "center",
-          flexDirection: "row",
+          transform: "rotate(+0deg)",
         },
         {
           gridArea: "right-hand",
-          flexDirection: "column",
+          transform: "rotate(-90deg)",
         },
       ];
-      rotated = [true, false, true];
+      rotated = [false, false, false];
       break;
     case 5:
       myComponentStyle = [
         {
           gridArea: "left-hand",
-          flexDirection: "column",
+          transform: "rotate(+90deg)",
         },
         {
           gridArea: "top-hand",
           gridColumn: "1 / span 3",
-          justifyContent: "center",
-          flexDirection: "row",
+          transform: "rotate(+0deg)",
         },
         {
           gridArea: "top-hand",
           gridColumn: "4 / span 3",
-          justifyContent: "center",
-          flexDirection: "row",
+          transform: "rotate(+0deg)",
         },
         {
           gridArea: "right-hand",
-          flexDirection: "column",
+          transform: "rotate(-90deg)",
         },
       ];
       rotated = [true, false, false, true];
@@ -112,15 +108,22 @@ const OpponentsSide = ({ gameInfo, playerId }) => {
   return (
     <div className="OpponentsSide">
       {Array.from({ length: gameInfo.players.length - 1 }, (_, i) => (
-        <OpponentHand
-          playerHandLength={
-            gameInfo.players[(playerIndex + i + 1) % gameInfo.players.length]
-              .playerHand.length
-          }
-          style={myComponentStyle[i]}
-          key={i}
-          rotated={rotated[i]}
-        ></OpponentHand>
+        <div className="PlayerSpot" style={myComponentStyle[i]}>
+          <span className="OpponentName">
+            {
+              gameInfo.players[(playerIndex + i + 1) % gameInfo.players.length]
+                .playerName
+            }
+          </span>
+          <OpponentHand
+            playerHandLength={
+              gameInfo.players[(playerIndex + i + 1) % gameInfo.players.length]
+                .playerHand.length
+            }
+            key={i}
+            rotated={rotated[i]}
+          ></OpponentHand>
+        </div>
       ))}
       <PlayedCards playedCards={gameInfo.playedCards}></PlayedCards>
     </div>

@@ -30,15 +30,23 @@
   align-items: center;
   z-index: 1;
 }
-.call-popup-inner,
-.call-popup-inner input,
-.call-popup-inner label,
-.call-popup-inner form {
-  position: relative;
+.call-popup-inner {
+  padding: 10px;
+  background-color: white;
+}
+.call-popup-inner input {
   padding: 1vw;
   font-size: 4vh;
   background-color: white;
 }
+.call-popup-input {
+  width: 30vw;
+}
+.call-popup-inner label {
+  padding: 1vw;
+  font-size: 4vh;
+}
+
 .call-popup-inner input::-webkit-outer-spin-button,
 .call-popup-inner input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -59,6 +67,19 @@
   text-align: center;
 }
 
+.last-turn-button {
+  padding: 0;
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid black;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  top: 5px;
+  left: 5px;
+  z-index: 3;
+}
+
 .laleo-cards {
   gap: 0.5rem;
   display: flex;
@@ -73,4 +94,20 @@
 }
 .laleo-cards .card.selected {
   background-color: rgba(255, 255, 0, 0.5);
+}
+
+.laleo-button {
+  border-radius: 0;
+  border: 1px solid black;
+  border-radius: 7px;
+  width: 100%;
+  height: min(8vh, 50px);
+  font-size: min(4vh, 25px);
+  z-index: 2;
+  background-color: rgba(255, 255, 0, 0.5);
+}
+.laleo-text {
+  text-align: center;
+  font-size: min(4vh, 25px);
+  padding-bottom: 1vw;
 }

@@ -13,6 +13,7 @@ const CallPopup = ({ trigger, socket, setIsBuio, maxCall, userId }) => {
           <label htmlFor="call">
             Chiamata:
             <input
+              className="call-popup-input"
               autoFocus
               required
               type="number"
