@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 
-const WaitingRoom = ({ users, socket, userId }) => {
-  function isHost({ users, userId }) {
+const WaitingRoom = ({ users, socket }) => {
+  function isHost({ users, socket }) {
     let result;
     try {
-      result = users.find((users) => users.userId === userId).host;
+      result = users.find((users) => users.userId === socket.id).host;
     } catch (e) {
       return false;
     } finally {
@@ -19,18 +19,20 @@ const WaitingRoom = ({ users, socket, userId }) => {
 
   return (
     <div className="WaitingRoom">
-      <h1>WaitingRoom Id={roomId}</h1>
+      <h1>
+        Waiting Room <br></br> {roomId}
+      </h1>
       <h2>List of players:</h2>
       <ul>
         {users.map((user) => (
           <li key={user.userId}>
             {user.userName} {user.host && "(host) "}
-            {userId === user.userId && "(you)"}
+            {socket.id === user.userId && "(you)"}
             {user.ready ? "✔️" : "❌"}
           </li>
         ))}
       </ul>
-      {isHost({ users, userId }) && allReady(users) && users.length >= 2 && (
+      {isHost({ users, socket }) && allReady(users) && users.length >= 2 && (
         <button
           onClick={() => {
             socket.emit("start-game", users);

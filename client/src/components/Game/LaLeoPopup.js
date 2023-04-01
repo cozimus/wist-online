@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Card from "../../utils/Card";
 
-const LaLeoPopup = ({ trigger, setTrigger, handCards, socket, userId }) => {
+const LaLeoPopup = ({ trigger, setTrigger, handCards, socket }) => {
   const [laLeoSelected, setLaLeoSelected] = useState([]);
 
   return trigger ? (
@@ -29,7 +29,7 @@ const LaLeoPopup = ({ trigger, setTrigger, handCards, socket, userId }) => {
             className="laleo-button"
             onClick={() => {
               setTrigger(false);
-              socket.emit("laleo-change", laLeoSelected, userId);
+              socket.emit("laleo-change", laLeoSelected);
             }}
           >
             CHANGE

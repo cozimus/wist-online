@@ -108,19 +108,26 @@ const OpponentsSide = ({ gameInfo, playerId }) => {
   return (
     <div className="OpponentsSide">
       {Array.from({ length: gameInfo.players.length - 1 }, (_, i) => (
-        <div className="PlayerSpot" style={myComponentStyle[i]}>
+        <div className="PlayerSpot" style={myComponentStyle[i]} key={i}>
           <span className="OpponentName">
             {
               gameInfo.players[(playerIndex + i + 1) % gameInfo.players.length]
                 .playerName
             }
+            {gameInfo.players[(playerIndex + i + 1) % gameInfo.players.length]
+              .call === 1
+              ? " BF "
+              : ""}
+            {gameInfo.players[(playerIndex + i + 1) % gameInfo.players.length]
+              .roundPosition === gameInfo.playerTurn
+              ? String.fromCodePoint("0x1F7E1")
+              : ""}
           </span>
           <OpponentHand
             playerHandLength={
               gameInfo.players[(playerIndex + i + 1) % gameInfo.players.length]
                 .playerHand.length
             }
-            key={i}
             rotated={rotated[i]}
           ></OpponentHand>
         </div>

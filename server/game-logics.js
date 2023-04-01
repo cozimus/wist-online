@@ -53,6 +53,23 @@ const WIST_POINTS_MAP = {
 };
 const waitingTime = process.env.NODE_ENV === "production" ? 2000 : 200;
 console.log("waitingTime = ", waitingTime);
+Number.prototype.mod = function (n) {
+  return ((this % n) + n) % n;
+};
+Array.prototype.sortHand = function () {
+  let ordering = {}; // map for efficient lookup of sortIndex
+  const sortOrder = ["♥", "♦", "♣", "♠"];
+  for (let i = 0; i < sortOrder.length; i++) {
+    ordering[sortOrder[i]] = i;
+  }
+  return this.sort(function (a, b) {
+    return (
+      ordering[a.suit] - ordering[b.suit] ||
+      CARD_VALUE_MAP[a.value] - CARD_VALUE_MAP[b.value]
+    );
+  });
+};
+
 let gamesData = [];
 
 function gameSetup(usersData) {
@@ -119,7 +136,9 @@ function updateTurn(playedCard, playerId, roomId) {
 
   //if the turn is not over let the next player play the card
   if (gameInfo.playedCards.length !== gameInfo.players.length) {
-    gameInfo.playerTurn = (gameInfo.playerTurn + 1) % gameInfo.players.length;
+    gameInfo.playerTurn = (gameInfo.playerTurn + 1).mod(
+      gameInfo.players.length
+    );
   }
 
   gamesData.map((game) => (gameInfo.roomId === game.roomId ? gameInfo : game));
@@ -136,9 +155,11 @@ async function endTurn(gameInfo) {
   //update the presa and the round Positions
   gameInfo.players.forEach((player) => {
     if (player.roundPosition === winnerIndex) player.prese += 1;
-    player.roundPosition =
-      (player.roundPosition - winnerIndex + gameInfo.players.length) %
-      gameInfo.players.length;
+    player.roundPosition = (
+      player.roundPosition -
+      winnerIndex +
+      gameInfo.players.length
+    ).mod(gameInfo.players.length);
   });
 
   //clear played cards and firstPlayedSuit, update playerTurn
@@ -157,8 +178,11 @@ async function endTurn(gameInfo) {
     gameInfo.players.forEach((player) => {
       player.call = "";
       player.prese = 0;
-      player.roundPosition =
-        (player.firstRoundPosition + gameInfo.round) % gameInfo.players.length;
+      player.roundPosition = (
+        player.firstRoundPosition +
+        gameInfo.players.length -
+        gameInfo.round
+      ).mod(gameInfo.players.length);
     });
     gameInfo.lastPlayedCards = [];
     distributeCards(gameInfo.players.length, gameInfo);
@@ -202,7 +226,8 @@ function distributeCards(numberOfPlayers, gameInfo) {
   const startingCards = STARTING_CARDS_MAP[numberOfPlayers];
 
   gameInfo.players.forEach((player) => {
-    player.playerHand = deck.startHand(startingCards);
+    player.playerHand = deck.startHand(startingCards).sortHand();
+    // player.playerHand = sortHand(player.playerHand);
   });
 }
 
@@ -219,7 +244,9 @@ function updateCall(call, playerId, roomId) {
   if (!(callSum === STARTING_CARDS_MAP[gameInfo.players.length] && isLast)) {
     //update player call
     gameInfo.players.find((player) => player.id === playerId).call = call;
-    gameInfo.playerTurn = (gameInfo.playerTurn + 1) % gameInfo.players.length;
+    gameInfo.playerTurn = (gameInfo.playerTurn + 1).mod(
+      gameInfo.players.length
+    );
     valid = true;
   }
 
@@ -290,14 +317,31 @@ function handleLaLeo(cards, playerId, roomId) {
         (player) => player.id === gameInfo.laLeoCards[i].playerId
       ).firstRoundPosition;
       gameInfo.players[
-        (startingPlayerIndex + 1) % gameInfo.players.length
-      ].playerHand.push(...gameInfo.laLeoCards[i].cards);
+        (startingPlayerIndex + 1).mod(gameInfo.players.length)
+      ].playerHand
+        .push(...gameInfo.laLeoCards[i].cards)
+        .sortHand();
+      // newHand = sortHand(newHand);
     }
     gameInfo.laLeoCards = [];
   }
   gamesData.map((game) => (gameInfo.roomId === game.roomId ? gameInfo : game));
   return gameInfo;
 }
+
+// function sortHand(playerHand) {
+//   let ordering = {}; // map for efficient lookup of sortIndex
+//   const sortOrder = ["♥", "♦", "♠", "♣"];
+//   for (let i = 0; i < sortOrder.length; i++) {
+//     ordering[sortOrder[i]] = i;
+//   }
+//   return playerHand.sort(function (a, b) {
+//     return (
+//       ordering[a.suit] - ordering[b.suit] ||
+//       CARD_VALUE_MAP[a.value] - CARD_VALUE_MAP[b.value]
+//     );
+//   });
+// }
 
 export {
   gameSetup,

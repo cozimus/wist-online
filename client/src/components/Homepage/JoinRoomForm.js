@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const JoinRoomForm = ({ socket, userId }) => {
+const JoinRoomForm = ({ socket }) => {
   const [joinName, setJoinName] = useState("");
   const [roomId, setRoomId] = useState("");
 
@@ -10,9 +10,8 @@ const JoinRoomForm = ({ socket, userId }) => {
     e.preventDefault();
     const userData = {
       userName: joinName,
-      userId: userId,
+      userId: socket.id,
       roomId: roomId,
-      socketId: socket.id,
       host: false,
       ready: true,
     };

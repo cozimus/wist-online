@@ -60,6 +60,9 @@ input[type="text"] {
   padding: 6px 40px;
   border-radius: 10%;
 }
+.WaitingRoom h1 {
+  text-align: center;
+}
 
 .homepageColumn {
   display: inline-block;

@@ -1,10 +1,18 @@
 import "../../styles/popups.css";
+import { socket } from "../../socket";
+import { useState } from "react";
 
-const CallPopup = ({ trigger, socket, setIsBuio, maxCall, userId }) => {
+const CallPopup = ({ trigger, setIsBuio, maxCall, callSum, isLast }) => {
+  const [isValidCall, setIsValidCall] = useState(true);
   function handleSubmit(e) {
     e.preventDefault();
-    socket.emit("call-selected", Number(e.target[0].value), userId);
-    setIsBuio(false);
+    if (callSum + Number(e.target[0].value) === maxCall && isLast) {
+      setIsValidCall(false);
+    } else {
+      socket.emit("call-selected", Number(e.target[0].value));
+      setIsBuio(false);
+      setIsValidCall(true);
+    }
   }
   return trigger ? (
     <div className="call-popup">
@@ -25,6 +33,9 @@ const CallPopup = ({ trigger, socket, setIsBuio, maxCall, userId }) => {
           </label>
           <input type="submit" value="&#10004;" />
         </form>
+        {!isValidCall && (
+          <span className="invalid-call-text">Invalid call</span>
+        )}
       </div>
     </div>
   ) : (

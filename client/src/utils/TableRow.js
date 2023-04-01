@@ -40,7 +40,8 @@ const TableRow = ({ data, name }) => {
             (data.find((column) => column.round === 7).points ? "" : "prese")
           }
         >
-          {data.find((column) => column.round === 7).points}
+          {data.find((column) => column.round === 7).points ||
+            data.find((column) => column.round === 7).prese}
         </span>
       </td>
     </tr>

@@ -15,27 +15,10 @@ function getRoom(userId) {
   return room;
 }
 
-//Remove a user from the listand return all users in the old room
+//Remove a user from the list and return all users in the old room
 function removeUser(id) {
   const index = users.findIndex((users) => users.userId === id);
   const oldRoom = getRoom(id);
-  if (index !== -1) {
-    users.splice(index, 1);
-    return users.filter((users) => users.roomId === oldRoom);
-  }
-}
-
-function getRoomBySocket(socketId) {
-  let room = "";
-  if (users.find((users) => users.socketId === socketId)) {
-    room = users.find((users) => users.socketId === socketId).roomId;
-  }
-  return room;
-}
-
-function removeUserBySocket(socketId) {
-  const index = users.findIndex((users) => users.socketId === socketId);
-  const oldRoom = getRoomBySocket(socketId);
   if (index !== -1) {
     users.splice(index, 1);
     return users.filter((users) => users.roomId === oldRoom);
@@ -77,7 +60,5 @@ export {
   getUsers,
   setNotReady,
   updateUsers,
-  removeUserBySocket,
-  getRoomBySocket,
 };
 // { userName, userId, roomId, host, ready}

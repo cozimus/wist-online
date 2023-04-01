@@ -2,7 +2,7 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 
-const CreateRoomForm = ({ socket, userId }) => {
+const CreateRoomForm = ({ socket }) => {
   const [hostName, setHostName] = useState("");
   const navigate = useNavigate();
   function handleCreateSubmit(e) {
@@ -10,9 +10,8 @@ const CreateRoomForm = ({ socket, userId }) => {
     const roomId = uuid().slice(0, 11);
     const userData = {
       userName: hostName,
-      userId: userId,
+      userId: socket.id,
       roomId: roomId,
-      socketId: socket.id,
       host: true,
       ready: true,
     };

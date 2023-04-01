@@ -9,17 +9,12 @@ const Card = ({
   setLaLeoSelected,
   color,
   position,
-  userId,
 }) => {
   function handleClick() {
-    socket.emit(
-      "played-card",
-      {
-        value: value,
-        suit: suit,
-      },
-      userId
-    );
+    socket.emit("played-card", {
+      value: value,
+      suit: suit,
+    });
   }
 
   function isSelected() {

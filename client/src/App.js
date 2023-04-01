@@ -105,10 +105,12 @@ function App() {
     socket.on("update-info", (info) => {
       setGameInfo(info);
     });
-    socket.on("update-table-call", ({ gameInfo, playerId }) => {
-      setPointsTable((pointsTable) =>
-        updateCallTable(pointsTable, gameInfo, playerId)
-      );
+    socket.on("update-table-call", ({ gameInfo, playerId, valid }) => {
+      if (valid) {
+        setPointsTable((pointsTable) =>
+          updateCallTable(pointsTable, gameInfo, playerId)
+        );
+      }
     });
     socket.on("write-table-prese", (gameInfo) => {
       setPointsTable((pointsTable) => updatePreseTable(pointsTable, gameInfo));
@@ -168,19 +170,15 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={<Homepage socket={socket} userId={userId} />}
-          ></Route>
+          <Route path="/" element={<Homepage />}></Route>
           <Route
             path="/:roomId"
             element={
               !gameStarted ? (
-                <WaitingRoom users={users} socket={socket} userId={userId} />
+                <WaitingRoom users={users} socket={socket} />
               ) : gameEnded ? (
                 <GameEnded
                   users={users}
-                  userId={userId}
                   socket={socket}
                   pointsTable={pointsTable}
                   setGameStarted={setGameStarted}
@@ -189,7 +187,6 @@ function App() {
               ) : (
                 <Game
                   socket={socket}
-                  userId={userId}
                   gameInfo={gameInfo}
                   pointsTable={pointsTable}
                 />

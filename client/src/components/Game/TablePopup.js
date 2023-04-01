@@ -9,7 +9,6 @@ const TablePopup = ({
   setGameEnded,
   users,
   socket,
-  userId,
 }) => {
   return trigger ? (
     <div className="table-popup popup">
@@ -23,7 +22,7 @@ const TablePopup = ({
                 <th className="suit red">♦</th>
                 <th className="suit black">♣</th>
                 <th className="suit black">♠</th>
-                <th>Lib</th>
+                <th>Libera</th>
                 <th>LaLeo</th>
                 <th>Buio</th>
                 <th>Wist</th>
@@ -50,7 +49,7 @@ const TablePopup = ({
               socket.emit(
                 "update-users",
                 users.map((user) =>
-                  user.userId === userId
+                  user.userId === socket.id
                     ? {
                         ...user,
                         ready: true,
