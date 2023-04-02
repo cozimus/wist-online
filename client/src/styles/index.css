@@ -16,11 +16,21 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(25px, 10vh, 3rem);
+  font-size: clamp(24px, 9vh, 3rem);
   padding-top: 1vh;
 }
 
-ul {
+h3 {
+  font-size: clamp(16px, 6vh, 2rem);
+  padding-top: 1vh;
+}
+
+h4 {
+  font-size: clamp(12px, 4.5vh, 1.5rem);
+  padding-top: 1vh;
+}
+
+.WaitingRoom ul {
   font-size: clamp(20px, 7vh, 2rem);
   padding-top: 1vh;
 }
@@ -47,11 +57,14 @@ input[type="text"] {
 .Homepage {
   width: 100%;
   height: 100%;
-  font-size: 36px;
   display: grid;
   grid-template-columns: 50vw 50vw;
   justify-content: center;
   align-items: center;
+}
+
+.Homepage form {
+  font-size: 36px;
 }
 
 .Homepage button,
@@ -192,4 +205,16 @@ input[type="text"] {
   font-size: min(10vh, 60px);
   z-index: 2;
   background-color: rgb(110, 255, 255);
+}
+
+#info-button {
+  padding: 0;
+  position: absolute;
+  border: 1px solid black;
+  width: 80px;
+  height: 40px;
+  font-size: 20px;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
 }
