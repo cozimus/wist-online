@@ -313,35 +313,22 @@ function handleLaLeo(cards, playerId, roomId) {
 
   if (gameInfo.laLeoCards.length === gameInfo.players.length) {
     for (let i = 0; i < gameInfo.laLeoCards.length; i++) {
-      let startingPlayerIndex = gameInfo.players.find(
+      const startingPlayerIndex = gameInfo.players.find(
         (player) => player.id === gameInfo.laLeoCards[i].playerId
       ).firstRoundPosition;
-      gameInfo.players[
-        (startingPlayerIndex + 1).mod(gameInfo.players.length)
-      ].playerHand
-        .push(...gameInfo.laLeoCards[i].cards)
-        .sortHand();
-      // newHand = sortHand(newHand);
+      const playerIndex = (startingPlayerIndex + 1).mod(
+        gameInfo.players.length
+      );
+      gameInfo.players[playerIndex].playerHand.push(
+        ...gameInfo.laLeoCards[i].cards
+      );
+      gameInfo.players[playerIndex].playerHand.sortHand();
     }
     gameInfo.laLeoCards = [];
   }
   gamesData.map((game) => (gameInfo.roomId === game.roomId ? gameInfo : game));
   return gameInfo;
 }
-
-// function sortHand(playerHand) {
-//   let ordering = {}; // map for efficient lookup of sortIndex
-//   const sortOrder = ["♥", "♦", "♠", "♣"];
-//   for (let i = 0; i < sortOrder.length; i++) {
-//     ordering[sortOrder[i]] = i;
-//   }
-//   return playerHand.sort(function (a, b) {
-//     return (
-//       ordering[a.suit] - ordering[b.suit] ||
-//       CARD_VALUE_MAP[a.value] - CARD_VALUE_MAP[b.value]
-//     );
-//   });
-// }
 
 export {
   gameSetup,
