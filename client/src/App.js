@@ -116,6 +116,12 @@ function App() {
       setPointsTable((pointsTable) => updatePreseTable(pointsTable, gameInfo));
       if (gameInfo.round === 8) {
         setGameEnded(true);
+        if (users.find((user) => socket.id === user.userId).host) {
+          // socket.emit(
+          //   "save-points-table",
+          //   updatePreseTable(pointsTable, gameInfo)
+          // );
+        }
       }
     });
     socket.on("update-table-points", (gameInfo) => {
@@ -134,8 +140,10 @@ function App() {
       socket.off("update-table-call");
       socket.off("write-table-prese");
       socket.off("update-table-points");
+      socket.off("connect");
+      socket.off("disconnect");
     };
-  }, []);
+  });
 
   useEffect(() => {
     const unloadCallback = (event) => {

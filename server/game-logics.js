@@ -188,13 +188,7 @@ async function endTurn(gameInfo) {
     distributeCards(gameInfo.players.length, gameInfo);
   }
   if (gameInfo.round === 8) {
-    //if the game is over remove the game from gamesData
-    const index = gamesData.findIndex(
-      (game) => game.roomId === gameInfo.roomId
-    );
-    if (index !== -1) {
-      gamesData.splice(index, 1);
-    }
+    handleGameOver(gameInfo);
   }
   return gameInfo.round;
 }
@@ -328,6 +322,14 @@ function handleLaLeo(cards, playerId, roomId) {
   }
   gamesData.map((game) => (gameInfo.roomId === game.roomId ? gameInfo : game));
   return gameInfo;
+}
+
+function handleGameOver(gameInfo) {
+  //if the game is over remove the game from gamesData
+  const index = gamesData.findIndex((game) => game.roomId === gameInfo.roomId);
+  if (index !== -1) {
+    gamesData.splice(index, 1);
+  }
 }
 
 export {

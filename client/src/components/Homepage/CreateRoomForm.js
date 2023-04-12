@@ -17,6 +17,22 @@ const CreateRoomForm = ({ socket }) => {
     };
     navigate(`/${roomId}`);
     socket.emit("create-room", userData);
+
+    //test code
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "DB/resultsData.json" },
+      body: JSON.stringify({ title: "React POST Request Example" }),
+    };
+    fetch("http://localhost:4000/resultsData.json", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // Handle data
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
 
   return (
