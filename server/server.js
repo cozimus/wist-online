@@ -1,26 +1,43 @@
+import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import express from "express";
+import bodyParser from "body-parser";
+import "dotenv/config.js";
+import cors from "cors";
+import mongoose from "mongoose";
 
-import writeData from "./utils/writeData.js";
-import serverOptions from "./utils/serverOptions.js";
+import connectDB from "./config/dbConn.js";
+import { serverOptions, corsOptions } from "./config/serverOptions.js";
 import socketConnection from "./utils/socketConnection.js";
+import {
+  handleNewRecord,
+  getAllRecords,
+} from "./controllers/recordController.js";
+
 const PORT = process.env.PORT || 4000;
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, serverOptions);
 
 app.use(express.json());
-
+app.use(bodyParser.json());
+app.use(cors());
+connectDB();
 socketConnection(io);
 
-app.post("/resultsData.json", (req, res) => {
-  writeData("pointsTable", "resultsData.json");
-  let data = req.body;
-  res.send("Data Received: " + JSON.stringify(data));
+app.get("/", (req, res) => {
+  res.json({ message: "Hello from server!" });
 });
+app.post("/", (req, res) => {
+  res.json({ message: "Hello from server!" });
+  console.log("sas");
+});
+app.post("/records", handleNewRecord);
+app.get("/records", getAllRecords);
 
-httpServer.listen(PORT, () => {
-  console.log(`Server has started on port ${PORT}`);
-  console.log(`Server has started in environment ${process.env.NODE_ENV}`);
+mongoose.connection.once("open", () => {
+  console.log("connected to MongoDB");
+  httpServer.listen(PORT, () =>
+    console.log(`Server listening on port ${PORT}`)
+  );
 });

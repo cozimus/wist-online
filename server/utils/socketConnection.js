@@ -15,12 +15,11 @@ import {
   endTurn,
   handleLaLeo,
   clearRoom,
-} from "../game-logics.js";
+} from "./game-logics.js";
 
 const socketConnection = (io) => {
   io.on("connection", (socket) => {
     if (socket.recovered) {
-      // recovery was successful: socket.id, socket.rooms and socket.data were restored
       console.log("RECOVERY socket", socket.id);
     } else {
       console.log("CONNECT socket", socket.id);

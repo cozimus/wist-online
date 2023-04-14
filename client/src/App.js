@@ -1,13 +1,17 @@
 // import { Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { v4 as uuid } from "uuid";
 import { socket } from "./socket";
 import Homepage from "./components/Homepage/Homepage.js";
 import WaitingRoom from "./components/WaitingRoom/WaitingRoom.js";
 import Game from "./components/Game/Game.js";
-import TableTemplate from "./utils/TableTemplate.js";
 import GameEnded from "./components/Game/GameEnded.js";
-
+import Records from "./components/Records/Records.js";
+import {
+  createPointsTable,
+  updateCallTable,
+  updatePreseTable,
+  updatePointsTable,
+} from "./utils/TableUpdate";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 function App() {
@@ -16,82 +20,6 @@ function App() {
   const [gameInfo, setGameInfo] = useState({});
   const [pointsTable, setPointsTable] = useState([]);
   const [gameEnded, setGameEnded] = useState(false);
-  const [userId, setUserId] = useState(uuid().slice(0, 13));
-
-  function createPointsTable(gameInfo) {
-    const pointsTableTable = [];
-    gameInfo.players.forEach((player) => {
-      pointsTableTable.push({
-        playerName: player.playerName,
-        playerId: player.id,
-        callAndPoints: TableTemplate,
-      });
-    });
-    return pointsTableTable;
-  }
-
-  function updateCallTable(pointsTable, gameInfo, playerId) {
-    return pointsTable.map((playerRow) =>
-      playerRow.playerId === playerId
-        ? {
-            ...playerRow,
-            callAndPoints: playerRow.callAndPoints.map((data) =>
-              data.round === gameInfo.round
-                ? {
-                    ...data,
-                    call: gameInfo.players.find(
-                      (player) => player.id === playerId
-                    ).call,
-                  }
-                : { ...data }
-            ),
-          }
-        : { ...playerRow }
-    );
-  }
-
-  function updatePreseTable(pointsTable, gameInfo) {
-    return pointsTable.map((playerRow) => ({
-      ...playerRow,
-      callAndPoints: playerRow.callAndPoints.map((data) =>
-        data.round === gameInfo.round
-          ? {
-              ...data,
-              prese: gameInfo.players.find(
-                (player) => player.id === playerRow.playerId
-              ).prese,
-            }
-          : { ...data }
-      ),
-    }));
-  }
-
-  function updatePointsTable(pointsTable, gameInfo) {
-    return pointsTable.map((playerRow) => ({
-      ...playerRow,
-      callAndPoints: playerRow.callAndPoints.map((data) =>
-        data.round === gameInfo.round - 1
-          ? {
-              ...data,
-              points: gameInfo.players.find(
-                (player) => player.id === playerRow.playerId
-              ).points,
-              guessed:
-                gameInfo.players.find(
-                  (player) => player.id === playerRow.playerId
-                ).points >=
-                (playerRow.callAndPoints.find(
-                  (column) => column.round === data.round - 1
-                )
-                  ? playerRow.callAndPoints.find(
-                      (column) => column.round === data.round - 1
-                    ).points + 11
-                  : 11),
-            }
-          : { ...data }
-      ),
-    }));
-  }
 
   useEffect(() => {
     socket.on("allUsers", (usersInRoom) => {
@@ -155,7 +83,7 @@ function App() {
 
     window.addEventListener("beforeunload", unloadCallback);
     return () => window.removeEventListener("beforeunload", unloadCallback);
-  }, []);
+  });
 
   useEffect(() => {
     if (
@@ -163,22 +91,14 @@ function App() {
     ) {
       window.location.href = "/";
     }
-  }, []);
-
-  useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    if (storedUserId) {
-      setUserId(storedUserId);
-    } else {
-      localStorage.setItem("userId", userId);
-    }
-  }, []);
+  });
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Homepage />}></Route>
+          <Route path="/records" element={<Records />}></Route>
           <Route
             path="/:roomId"
             element={

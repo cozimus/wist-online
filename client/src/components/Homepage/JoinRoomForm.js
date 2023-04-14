@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { socket } from "../../socket";
 
-const JoinRoomForm = ({ socket }) => {
+const JoinRoomForm = () => {
   const [joinName, setJoinName] = useState("");
   const [roomId, setRoomId] = useState("");
 

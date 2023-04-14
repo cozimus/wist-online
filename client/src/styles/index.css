@@ -1,6 +1,6 @@
 :root {
-  --CARD-WIDTH: clamp(35px, min(8.5vh, 5.3vw), 70px);
-  --CARD-HEIGHT: calc(var(--CARD-WIDTH) * 111 / 70);
+  --CARD-WIDTH: clamp(38px, min(8.7vh, 5.5vw), 90px);
+  --CARD-HEIGHT: calc(var(--CARD-WIDTH) * 1.4078);
 }
 
 * {
@@ -177,12 +177,6 @@ input[type="text"] {
   width: var(--CARD-WIDTH);
 }
 
-.CardBack.rotated,
-.CardBack.rotated img {
-  width: var(--CARD-HEIGHT);
-  height: var(--CARD-WIDTH);
-}
-
 .table-button {
   padding: 0;
   position: absolute;
@@ -211,10 +205,21 @@ input[type="text"] {
   padding: 0;
   position: absolute;
   border: 1px solid black;
-  width: 80px;
-  height: 40px;
+  width: 100px;
+  height: 50px;
   font-size: 20px;
   top: 10px;
   left: 10px;
+  z-index: 2;
+}
+#records-button {
+  padding: 0;
+  position: absolute;
+  border: 1px solid black;
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+  top: 10px;
+  right: 10px;
   z-index: 2;
 }

@@ -8,7 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: calc(var(--CARD-HEIGHT) * 2 / 3);
+  font-size: calc(var(--CARD-HEIGHT) * 0.7);
   background-color: white;
 }
 
@@ -28,16 +28,16 @@
 .card::after {
   position: absolute;
   content: attr(data-value);
-  font-size: calc(var(--CARD-HEIGHT) * 1 / 7);
+  font-size: calc(var(--CARD-HEIGHT) * 0.155);
 }
 
 .card::before {
-  top: calc(var(--CARD-HEIGHT) * 1 / 20);
-  left: calc(var(--CARD-WIDTH) * 1 / 10);
+  top: calc(var(--CARD-HEIGHT) * 0.03);
+  left: calc(var(--CARD-WIDTH) * 0.07);
 }
 
 .card::after {
-  bottom: calc(var(--CARD-HEIGHT) * 1 / 20);
-  right: calc(var(--CARD-WIDTH) * 1 / 10);
+  bottom: calc(var(--CARD-HEIGHT) * 0.03);
+  right: calc(var(--CARD-WIDTH) * 0.07);
   transform: rotate(180deg);
 }

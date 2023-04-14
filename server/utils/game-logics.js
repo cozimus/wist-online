@@ -1,5 +1,6 @@
-import Deck from "./utils/deck.js";
-import gameInfoTemplate from "./utils/gameInfoTemplate.js";
+import Deck from "./deck.js";
+import gameInfoTemplate from "./gameInfoTemplate.js";
+import { handleNewRecord } from "../controllers/recordController.js";
 
 const CARD_VALUE_MAP = {
   2: 2,
@@ -325,6 +326,17 @@ function handleLaLeo(cards, playerId, roomId) {
 }
 
 function handleGameOver(gameInfo) {
+  if (process.env.NODE_ENV === "production") {
+    gameInfo.players.forEach((element) => {
+      handleNewRecord({
+        playerName: element.playerName,
+        score: element.points,
+        players: gameInfo.players.length,
+      });
+    });
+  }
+
+  //store the results in the DB
   //if the game is over remove the game from gamesData
   const index = gamesData.findIndex((game) => game.roomId === gameInfo.roomId);
   if (index !== -1) {

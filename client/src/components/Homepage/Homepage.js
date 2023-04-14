@@ -1,9 +1,11 @@
 import CreateRoomForm from "./CreateRoomForm";
 import JoinRoomForm from "./JoinRoomForm";
 import Infopage from "./Infopage";
-import { socket } from "../../socket";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 const Homepage = () => {
+  const navigate = useNavigate();
   const [infoTrigger, setInfoTrigger] = useState(false);
   return (
     <div className="Homepage">
@@ -11,14 +13,17 @@ const Homepage = () => {
       <button id="info-button" onClick={() => setInfoTrigger(!infoTrigger)}>
         Info
       </button>
+      {/* <button id="records-button" onClick={() => navigate("/records")}>
+        Records
+      </button> */}
       <div className="homepageColumn">
         <div className="alignLeft">
-          <CreateRoomForm socket={socket}></CreateRoomForm>
+          <CreateRoomForm></CreateRoomForm>
         </div>
       </div>
       <div className="homepageColumn">
         <div className="alignLeft">
-          <JoinRoomForm socket={socket}></JoinRoomForm>
+          <JoinRoomForm></JoinRoomForm>
         </div>
       </div>
     </div>

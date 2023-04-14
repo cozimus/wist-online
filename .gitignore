@@ -1,1 +1,5 @@
-/test
+/test1-client
+/test1-server
+/test2-client
+/test2-server
+.env

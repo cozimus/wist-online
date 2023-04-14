@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
-
-const CreateRoomForm = ({ socket }) => {
+import { socket } from "../../socket";
+const CreateRoomForm = () => {
   const [hostName, setHostName] = useState("");
   const navigate = useNavigate();
   function handleCreateSubmit(e) {
@@ -17,22 +17,6 @@ const CreateRoomForm = ({ socket }) => {
     };
     navigate(`/${roomId}`);
     socket.emit("create-room", userData);
-
-    //test code
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "DB/resultsData.json" },
-      body: JSON.stringify({ title: "React POST Request Example" }),
-    };
-    fetch("http://localhost:4000/resultsData.json", requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        // Handle data
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
   }
 
   return (
