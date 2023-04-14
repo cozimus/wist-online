@@ -3,7 +3,7 @@ class gameInfoTemplate {
     this.players = [];
     this.playedCards = [];
     this.roomId = roomId;
-    this.round = 7;
+    this.round = 0;
     this.playerTurn = 0;
     this.firstPlayedSuit = "";
     this.lastPlayedCards = [];
