@@ -1,4 +1,4 @@
-const TableTemplate = [
+const tableTemplate = [
   {
     round: 0,
     call: "",
@@ -57,4 +57,4 @@ const TableTemplate = [
   },
 ];
 
-export default TableTemplate;
+export default tableTemplate;

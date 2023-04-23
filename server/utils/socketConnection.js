@@ -19,11 +19,8 @@ import {
 
 const socketConnection = (io) => {
   io.on("connection", (socket) => {
-    if (socket.recovered) {
-      console.log("RECOVERY socket", socket.id);
-    } else {
-      console.log("CONNECT socket", socket.id);
-    }
+    console.log("CONNECT socket", socket.id);
+
     socket.on("disconnect", (reason) => {
       console.log(reason);
       const roomId = getRoom(socket.id);
@@ -81,15 +78,8 @@ const socketConnection = (io) => {
         //if the turn is over, check who is the winner
         gameInfo.gameReady = false;
         io.in(gameInfo.roomId).emit("update-info", gameInfo);
-        const round = await endTurn(gameInfo);
+        await endTurn(gameInfo);
         io.in(gameInfo.roomId).emit("update-info", gameInfo);
-        io.in(gameInfo.roomId).emit("write-table-prese", gameInfo);
-      }
-      if (
-        gameInfo.players.reduce((partialSum, a) => partialSum + a.call, 0) ===
-        "0"
-      ) {
-        io.in(gameInfo.roomId).emit("update-table-points", gameInfo);
       }
     });
     socket.on("call-selected", (call) => {
@@ -102,14 +92,12 @@ const socketConnection = (io) => {
         io.in(gameInfo.roomId).emit("update-info", gameInfo);
         io.in(gameInfo.roomId).emit("update-table-call", {
           gameInfo: gameInfo,
-          playerId: socket.id,
           valid: true,
         });
       } else {
         //the call is invalid
         socket.emit("update-table-call", {
           gameInfo: gameInfo,
-          playerId: socket.id,
           valid: false,
         });
       }

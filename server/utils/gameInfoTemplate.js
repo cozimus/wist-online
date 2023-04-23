@@ -9,6 +9,7 @@ class gameInfoTemplate {
     this.lastPlayedCards = [];
     this.laLeoCards = [];
     this.gameReady = true;
+    this.pointsTable = [];
   }
 }
 

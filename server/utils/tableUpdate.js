@@ -1,4 +1,4 @@
-import TableTemplate from "./TableTemplate.js";
+import tableTemplate from "./tableTemplate.js";
 
 function createPointsTable(gameInfo) {
   const pointsTable = [];
@@ -6,14 +6,14 @@ function createPointsTable(gameInfo) {
     pointsTable.push({
       playerName: player.playerName,
       playerId: player.id,
-      callAndPoints: TableTemplate,
+      callAndPoints: tableTemplate,
     });
   });
   return pointsTable;
 }
 
-function updateCallTable(pointsTable, gameInfo, playerId) {
-  return pointsTable.map((playerRow) =>
+function updateCallTable(gameInfo, playerId) {
+  const newTable = gameInfo.pointsTable.map((playerRow) =>
     playerRow.playerId === playerId
       ? {
           ...playerRow,
@@ -30,22 +30,26 @@ function updateCallTable(pointsTable, gameInfo, playerId) {
         }
       : { ...playerRow }
   );
+  return newTable;
 }
 
-function updatePreseTable(pointsTable, gameInfo) {
-  return pointsTable.map((playerRow) => ({
-    ...playerRow,
-    callAndPoints: playerRow.callAndPoints.map((data) =>
-      data.round === gameInfo.round
-        ? {
-            ...data,
-            prese: gameInfo.players.find(
-              (player) => player.id === playerRow.playerId
-            ).prese,
-          }
-        : { ...data }
-    ),
-  }));
+function updatePreseTable(gameInfo, playerId) {
+  const newTable = gameInfo.pointsTable.map((playerRow) =>
+    playerRow.playerId === playerId
+      ? {
+          ...playerRow,
+          callAndPoints: playerRow.callAndPoints.map((data) =>
+            data.round === gameInfo.round
+              ? {
+                  ...data,
+                  prese: data.prese + 1,
+                }
+              : { ...data }
+          ),
+        }
+      : { ...playerRow }
+  );
+  return newTable;
 }
 
 function updatePointsTable(pointsTable, gameInfo) {

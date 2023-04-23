@@ -11,7 +11,6 @@ const Game = ({ socket, gameInfo, pointsTable }) => {
   const [laLeoTrigger, setLaLeoTrigger] = useState(false);
   const [isBuio, setIsBuio] = useState(false);
   const [isWistTurn, setIsWistTurn] = useState(false);
-
   useEffect(() => {
     if (gameInfo.round === 5) {
       setLaLeoTrigger(true);
@@ -33,12 +32,16 @@ const Game = ({ socket, gameInfo, pointsTable }) => {
       >
         T
       </button>
-      <button
-        className="last-turn-button"
-        onClick={() => setLastTurnButtonPopup(!lastTurnButtonPopup)}
-      >
-        P
-      </button>
+
+      {gameInfo.lastPlayedCards.length > 0 && (
+        <button
+          className="last-turn-button"
+          onClick={() => setLastTurnButtonPopup(!lastTurnButtonPopup)}
+        >
+          P
+        </button>
+      )}
+
       <TablePopup
         trigger={tableButtonPopup}
         pointsTable={pointsTable}

@@ -6,12 +6,6 @@ import WaitingRoom from "./components/WaitingRoom/WaitingRoom.js";
 import Game from "./components/Game/Game.js";
 import GameEnded from "./components/Game/GameEnded.js";
 import Records from "./components/Records/Records.js";
-import {
-  createPointsTable,
-  updateCallTable,
-  updatePreseTable,
-  updatePointsTable,
-} from "./utils/TableUpdate";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 function App() {
@@ -25,35 +19,22 @@ function App() {
     socket.on("allUsers", (usersInRoom) => {
       setUsers(usersInRoom); //users inside the room
     });
-    socket.on("starting-game", (info) => {
-      setGameInfo(info);
+    socket.on("starting-game", (gameInfo) => {
+      setGameInfo(gameInfo);
       setGameStarted(true);
-      setPointsTable(createPointsTable(info));
+      setPointsTable(gameInfo.pointsTable);
     });
-    socket.on("update-info", (info) => {
-      setGameInfo(info);
-    });
-    socket.on("update-table-call", ({ gameInfo, playerId, valid }) => {
-      if (valid) {
-        setPointsTable((pointsTable) =>
-          updateCallTable(pointsTable, gameInfo, playerId)
-        );
-      }
-    });
-    socket.on("write-table-prese", (gameInfo) => {
-      setPointsTable((pointsTable) => updatePreseTable(pointsTable, gameInfo));
+    socket.on("update-info", (gameInfo) => {
+      setGameInfo(gameInfo);
+      setPointsTable(gameInfo.pointsTable);
       if (gameInfo.round === 8) {
         setGameEnded(true);
-        if (users.find((user) => socket.id === user.userId).host) {
-          // socket.emit(
-          //   "save-points-table",
-          //   updatePreseTable(pointsTable, gameInfo)
-          // );
-        }
       }
     });
-    socket.on("update-table-points", (gameInfo) => {
-      setPointsTable((pointsTable) => updatePointsTable(pointsTable, gameInfo));
+    socket.on("update-table-call", ({ gameInfo, valid }) => {
+      if (valid) {
+        setPointsTable(gameInfo.pointsTable);
+      }
     });
     socket.on("disconnect", () => {
       console.log("Connection lost with socket  ", socket.id);
@@ -66,8 +47,6 @@ function App() {
       socket.off("starting-game");
       socket.off("update-info");
       socket.off("update-table-call");
-      socket.off("write-table-prese");
-      socket.off("update-table-points");
       socket.off("connect");
       socket.off("disconnect");
     };

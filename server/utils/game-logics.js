@@ -1,7 +1,12 @@
 import Deck from "./deck.js";
 import gameInfoTemplate from "./gameInfoTemplate.js";
 import { handleNewRecord } from "../controllers/recordController.js";
-
+import {
+  createPointsTable,
+  updateCallTable,
+  updatePreseTable,
+  updatePointsTable,
+} from "./tableUpdate.js";
 const CARD_VALUE_MAP = {
   2: 2,
   3: 3,
@@ -112,7 +117,9 @@ function gameSetup(usersData) {
   if (index !== -1) {
     gamesData.splice(index, 1);
   }
+  gameInfo.pointsTable = createPointsTable(gameInfo);
   gamesData.push(gameInfo);
+
   return gameInfo;
 }
 
@@ -155,7 +162,9 @@ async function endTurn(gameInfo) {
 
   //update the presa and the round Positions
   gameInfo.players.forEach((player) => {
-    if (player.roundPosition === winnerIndex) player.prese += 1;
+    if (player.roundPosition === winnerIndex) {
+      player.prese += 1;
+    }
     player.roundPosition = (
       player.roundPosition -
       winnerIndex +
@@ -168,6 +177,7 @@ async function endTurn(gameInfo) {
   gameInfo.firstPlayedSuit = "";
   gameInfo.playerTurn = 0;
   gameInfo.gameReady = true;
+  gameInfo.pointsTable = updatePreseTable(gameInfo);
   //check if the round is over
   if (
     gameInfo.players
@@ -184,14 +194,15 @@ async function endTurn(gameInfo) {
         gameInfo.players.length -
         gameInfo.round
       ).mod(gameInfo.players.length);
+      gameInfo.pointsTable = updatePointsTable(gameInfo.pointsTable, gameInfo);
     });
     gameInfo.lastPlayedCards = [];
     distributeCards(gameInfo.players.length, gameInfo);
   }
+
   if (gameInfo.round === 8) {
     handleGameOver(gameInfo);
   }
-  return gameInfo.round;
 }
 
 function turnWinner(gameInfo) {
@@ -244,7 +255,11 @@ function updateCall(call, playerId, roomId) {
     );
     valid = true;
   }
-
+  gameInfo.pointsTable = updateCallTable(
+    gameInfo.pointsTable,
+    gameInfo,
+    playerId
+  );
   gamesData.map((game) => (gameInfo.roomId === game.roomId ? gameInfo : game));
   return { gameInfo, valid };
 }
