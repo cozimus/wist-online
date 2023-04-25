@@ -161,7 +161,6 @@ function updateTurn(playedCard, playerId, roomId) {
 async function endTurn(gameInfo) {
   await sleep(waitingTime);
   const winnerIndex = turnWinner(gameInfo);
-  console.log(winnerIndex);
   let winnerPlayerId;
   //save the last played cards
   gameInfo.lastPlayedCards = gameInfo.playedCards;

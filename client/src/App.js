@@ -36,7 +36,7 @@ function App() {
       }
     });
     socket.on("disconnect", () => {
-      console.log("Connection lost with socket  ", socket.id);
+      console.log("Connection lost with a socket");
     });
     socket.on("connect", () => {
       console.log("Connection established with socket  ", socket.id);

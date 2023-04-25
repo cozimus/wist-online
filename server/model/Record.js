@@ -16,5 +16,5 @@ const recordSchema = new Schema({
 });
 
 const MODEL = process.env.NODE_ENV === "production" ? "Record" : "Example";
-
+console.log("Modello:", MODEL);
 export default model(MODEL, recordSchema);
