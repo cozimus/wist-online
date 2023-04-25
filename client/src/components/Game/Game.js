@@ -4,13 +4,35 @@ import TablePopup from "./TablePopup";
 import CallPopup from "./CallPopup";
 import LastTurnPopup from "./LastTurnPopup";
 import LaLeoPopup from "./LaLeoPopup";
+import { socket } from "../../socket";
 import { useState, useEffect } from "react";
-const Game = ({ socket, gameInfo, pointsTable }) => {
+const Game = ({ gameInfo }) => {
   const [tableButtonPopup, setTableButtonPopup] = useState(false);
   const [lastTurnButtonPopup, setLastTurnButtonPopup] = useState(false);
   const [laLeoTrigger, setLaLeoTrigger] = useState(false);
   const [isBuio, setIsBuio] = useState(false);
   const [isWistTurn, setIsWistTurn] = useState(false);
+
+  useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      event.returnValue = "are you sure you want to leave this page?";
+      return "are you sure you want to leave this page?";
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  });
+
+  useEffect(() => {
+    if (
+      window.performance.getEntriesByType("navigation")[0].type === "reload"
+    ) {
+      window.location.href = "/";
+    }
+  });
+
   useEffect(() => {
     if (gameInfo.round === 5) {
       setLaLeoTrigger(true);
@@ -44,8 +66,9 @@ const Game = ({ socket, gameInfo, pointsTable }) => {
 
       <TablePopup
         trigger={tableButtonPopup}
-        pointsTable={pointsTable}
+        pointsTable={gameInfo.pointsTable}
         gameEnded={false}
+        currentRound={gameInfo.round}
       ></TablePopup>
       <LastTurnPopup
         trigger={lastTurnButtonPopup}
@@ -58,7 +81,6 @@ const Game = ({ socket, gameInfo, pointsTable }) => {
         handCards={
           gameInfo.players.find((player) => player.id === socket.id).playerHand
         }
-        socket={socket}
         setTrigger={setLaLeoTrigger}
       ></LaLeoPopup>
       <CallPopup
@@ -85,7 +107,6 @@ const Game = ({ socket, gameInfo, pointsTable }) => {
       <OpponentsSide gameInfo={gameInfo} playerId={socket.id}></OpponentsSide>
       <UserSide
         playerInfo={gameInfo.players.find((player) => player.id === socket.id)}
-        socket={socket}
         playerTurn={gameInfo.playerTurn}
         isLaLeoOver={gameInfo.laLeoCards.length === 0}
         firstPlayedSuit={gameInfo.firstPlayedSuit}

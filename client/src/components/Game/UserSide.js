@@ -1,8 +1,9 @@
 import Card from "../../utils/Card";
+import { socket } from "../../socket";
+
 import "../../styles/Card.css";
 const UserSide = ({
   playerInfo,
-  socket,
   playerTurn,
   firstPlayedSuit,
   isLaLeoOver,

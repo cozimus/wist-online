@@ -1,0 +1,49 @@
+.Records {
+  text-align: center;
+  overflow: hidden;
+  height: 100vh;
+  max-width: 100%;
+}
+
+.Records h2 {
+  padding: 2vh 1vh;
+}
+
+.Records ul {
+  width: 15%;
+  background-color: #dddddd;
+  position: fixed;
+  height: 100%;
+}
+.Records .list-title {
+  padding: 10px 0px;
+  font-size: 2vw;
+  background-color: #fff944;
+}
+.Records li a {
+  font-size: 1.2vw;
+  background-color: #dddddd;
+  display: block;
+  color: #000;
+  padding: 20px;
+  text-decoration: none;
+}
+
+.Records li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+.Records li a.active {
+  background-color: rgb(5, 153, 183);
+  color: white;
+}
+
+.records-page {
+  margin-left: 15%;
+  padding: 10px 20px;
+  height: 100vh;
+}
+.Records .link-to-homepage a {
+  background-color: #ff9797;
+}

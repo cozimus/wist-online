@@ -42,7 +42,7 @@ function updatePreseTable(gameInfo, playerId) {
             data.round === gameInfo.round
               ? {
                   ...data,
-                  prese: data.prese + 1,
+                  prese: Number(data.prese) + 1,
                 }
               : { ...data }
           ),
@@ -52,8 +52,8 @@ function updatePreseTable(gameInfo, playerId) {
   return newTable;
 }
 
-function updatePointsTable(pointsTable, gameInfo) {
-  return pointsTable.map((playerRow) => ({
+function updatePointsTable(gameInfo) {
+  const newTable = gameInfo.pointsTable.map((playerRow) => ({
     ...playerRow,
     callAndPoints: playerRow.callAndPoints.map((data) =>
       data.round === gameInfo.round - 1
@@ -77,6 +77,7 @@ function updatePointsTable(pointsTable, gameInfo) {
         : { ...data }
     ),
   }));
+  return newTable;
 }
 
 export {

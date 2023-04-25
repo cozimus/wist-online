@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Card from "../../utils/Card";
+import { socket } from "../../socket";
 
-const LaLeoPopup = ({ trigger, setTrigger, handCards, socket }) => {
+const LaLeoPopup = ({ trigger, setTrigger, handCards }) => {
   const [laLeoSelected, setLaLeoSelected] = useState([]);
 
   return trigger ? (

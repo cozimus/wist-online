@@ -19,7 +19,7 @@ const JoinRoomForm = () => {
     socket.emit("join-request", userData);
     socket.on("room-is-valid", (isValid) => {
       if (isValid) {
-        navigate(`/${roomId}`);
+        navigate(`room/${roomId}`);
       } else {
         alert(
           "The selected room is not valid. Maybe it's full (max 6 players), it's not created yet or the game is already started"
@@ -37,7 +37,7 @@ const JoinRoomForm = () => {
         placeholder="Player Name"
         id="joinName"
         name="joinName"
-        maxLength="20"
+        maxLength="16"
         value={joinName}
         onChange={(event) => setJoinName(event.target.value)}
         required

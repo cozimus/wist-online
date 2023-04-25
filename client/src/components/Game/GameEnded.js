@@ -1,12 +1,7 @@
 import TablePopup from "./TablePopup";
+import { socket } from "../../socket";
 
-const GameEnded = ({
-  pointsTable,
-  setGameStarted,
-  setGameEnded,
-  users,
-  socket,
-}) => {
+const GameEnded = ({ pointsTable, setGameStarted, setGameEnded, users }) => {
   return (
     <div className="GameEnded">
       <TablePopup
@@ -16,7 +11,6 @@ const GameEnded = ({
         setGameStarted={setGameStarted}
         setGameEnded={setGameEnded}
         users={users}
-        socket={socket}
       ></TablePopup>
     </div>
   );

@@ -117,32 +117,3 @@
   font-size: min(4vh, 25px);
   padding-bottom: 1vw;
 }
-
-.Infopage {
-  overflow: scroll;
-}
-.Infopage .popup-inner {
-  position: absolute;
-  top: 0px;
-  width: 85%;
-}
-.Infopage p {
-  font-size: clamp(12px, 5vh, 1.5rem);
-}
-.Infopage ul {
-  padding-left: 2rem;
-}
-.info-table {
-  table-layout: fixed;
-  border: 1px solid black;
-  border-spacing: 0;
-}
-.info-table th {
-  border: 1px solid black;
-  font-size: clamp(12px, 5vh, 1.5rem);
-}
-.info-table td {
-  border: 1px solid black;
-  text-align: center;
-  font-size: clamp(12px, 5vh, 1.5rem);
-}

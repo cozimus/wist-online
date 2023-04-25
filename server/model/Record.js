@@ -1,18 +1,20 @@
 import { Schema, model } from "mongoose";
 
-const recordSchema = new Schema({
-  playerName: {
-    type: String,
-    required: true,
-  },
-  score: {
-    type: Number,
-    required: true,
-  },
-  players: {
-    type: Number,
-    required: true,
-  },
+var callAndPointsSchema = Schema({
+  call: Number,
+  prese: Number,
+  guessed: Boolean,
+  points: Number,
+  round: Number,
 });
 
-export default model("Record", recordSchema);
+const recordSchema = new Schema({
+  playerName: String,
+  callAndPoints: [callAndPointsSchema],
+  score: Number,
+  players: Number,
+});
+
+const MODEL = process.env.NODE_ENV === "production" ? "Record" : "Example";
+
+export default model(MODEL, recordSchema);

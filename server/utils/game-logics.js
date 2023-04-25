@@ -58,7 +58,8 @@ const WIST_POINTS_MAP = {
   6: 15,
 };
 const waitingTime = process.env.NODE_ENV === "production" ? 2000 : 200;
-console.log("waitingTime = ", waitingTime);
+console.log("waitingTime:", waitingTime);
+console.log("Environment:", process.env.NODE_ENV);
 Number.prototype.mod = function (n) {
   return ((this % n) + n) % n;
 };
@@ -125,28 +126,32 @@ function gameSetup(usersData) {
 
 function updateTurn(playedCard, playerId, roomId) {
   let gameInfo = gamesData.find((game) => game.roomId === roomId);
-  //update player hand
-  const dropIndex = gameInfo.players
-    .find((player) => player.id === playerId)
-    .playerHand.findIndex(
-      (card) => card.value === playedCard.value && card.suit === playedCard.suit
-    );
-  gameInfo.players
-    .find((player) => player.id === playerId)
-    .playerHand.splice(dropIndex, 1);
+  //if is a valid play (the player didn't played a card yet) do the stuff
+  if (!gameInfo.playedCards.find((element) => element.playerId === playerId)) {
+    //update player hand
+    const dropIndex = gameInfo.players
+      .find((player) => player.id === playerId)
+      .playerHand.findIndex(
+        (card) =>
+          card.value === playedCard.value && card.suit === playedCard.suit
+      );
+    gameInfo.players
+      .find((player) => player.id === playerId)
+      .playerHand.splice(dropIndex, 1);
 
-  //update played cards
-  gameInfo.playedCards.push(playedCard);
+    //update played cards
+    gameInfo.playedCards.push({ card: playedCard, playerId: playerId });
 
-  if (gameInfo.playedCards.length == 1) {
-    gameInfo.firstPlayedSuit = playedCard.suit;
-  }
+    if (gameInfo.playedCards.length == 1) {
+      gameInfo.firstPlayedSuit = playedCard.suit;
+    }
 
-  //if the turn is not over let the next player play the card
-  if (gameInfo.playedCards.length !== gameInfo.players.length) {
-    gameInfo.playerTurn = (gameInfo.playerTurn + 1).mod(
-      gameInfo.players.length
-    );
+    //if the turn is not over let the next player play the card
+    if (gameInfo.playedCards.length !== gameInfo.players.length) {
+      gameInfo.playerTurn = (gameInfo.playerTurn + 1).mod(
+        gameInfo.players.length
+      );
+    }
   }
 
   gamesData.map((game) => (gameInfo.roomId === game.roomId ? gameInfo : game));
@@ -156,7 +161,8 @@ function updateTurn(playedCard, playerId, roomId) {
 async function endTurn(gameInfo) {
   await sleep(waitingTime);
   const winnerIndex = turnWinner(gameInfo);
-
+  console.log(winnerIndex);
+  let winnerPlayerId;
   //save the last played cards
   gameInfo.lastPlayedCards = gameInfo.playedCards;
 
@@ -164,6 +170,7 @@ async function endTurn(gameInfo) {
   gameInfo.players.forEach((player) => {
     if (player.roundPosition === winnerIndex) {
       player.prese += 1;
+      winnerPlayerId = player.id;
     }
     player.roundPosition = (
       player.roundPosition -
@@ -177,7 +184,7 @@ async function endTurn(gameInfo) {
   gameInfo.firstPlayedSuit = "";
   gameInfo.playerTurn = 0;
   gameInfo.gameReady = true;
-  gameInfo.pointsTable = updatePreseTable(gameInfo);
+  gameInfo.pointsTable = updatePreseTable(gameInfo, winnerPlayerId);
   //check if the round is over
   if (
     gameInfo.players
@@ -194,7 +201,7 @@ async function endTurn(gameInfo) {
         gameInfo.players.length -
         gameInfo.round
       ).mod(gameInfo.players.length);
-      gameInfo.pointsTable = updatePointsTable(gameInfo.pointsTable, gameInfo);
+      gameInfo.pointsTable = updatePointsTable(gameInfo);
     });
     gameInfo.lastPlayedCards = [];
     distributeCards(gameInfo.players.length, gameInfo);
@@ -209,17 +216,17 @@ function turnWinner(gameInfo) {
   let leadingSuit;
   if (
     gameInfo.playedCards.filter(
-      (card) => card.suit === ROUND_BRISCOLA[gameInfo.round]
+      (element) => element.card.suit === ROUND_BRISCOLA[gameInfo.round]
     ).length > 0
   ) {
     //c'è almeno una briscola
     leadingSuit = ROUND_BRISCOLA[gameInfo.round];
   } else {
     //non c'è neanche una briscola, comanda il primo seme giocato
-    leadingSuit = gameInfo.playedCards[0].suit;
+    leadingSuit = gameInfo.playedCards[0].card.suit;
   }
-  const valuesArray = gameInfo.playedCards.map((card) =>
-    card.suit === leadingSuit ? CARD_VALUE_MAP[card.value] : 0
+  const valuesArray = gameInfo.playedCards.map((element) =>
+    element.card.suit === leadingSuit ? CARD_VALUE_MAP[element.card.value] : 0
   );
   return valuesArray.indexOf(Math.max(...valuesArray));
 }
@@ -255,11 +262,7 @@ function updateCall(call, playerId, roomId) {
     );
     valid = true;
   }
-  gameInfo.pointsTable = updateCallTable(
-    gameInfo.pointsTable,
-    gameInfo,
-    playerId
-  );
+  gameInfo.pointsTable = updateCallTable(gameInfo, playerId);
   gamesData.map((game) => (gameInfo.roomId === game.roomId ? gameInfo : game));
   return { gameInfo, valid };
 }
@@ -341,15 +344,13 @@ function handleLaLeo(cards, playerId, roomId) {
 }
 
 function handleGameOver(gameInfo) {
-  if (process.env.NODE_ENV === "production") {
-    gameInfo.players.forEach((element) => {
-      handleNewRecord({
-        playerName: element.playerName,
-        score: element.points,
-        players: gameInfo.players.length,
-      });
+  gameInfo.pointsTable.forEach((element) => {
+    handleNewRecord({
+      playerName: element.playerName,
+      callAndPoints: element.callAndPoints,
+      players: gameInfo.pointsTable.length,
     });
-  }
+  });
 
   //store the results in the DB
   //if the game is over remove the game from gamesData

@@ -2,12 +2,16 @@ import Card from "../../utils/Card";
 const PlayedCards = ({ playedCards }) => {
   return (
     <div className="PlayedCards">
-      {playedCards.map((card, index) => (
+      {playedCards.map((element, index) => (
         <Card
           key={index}
-          value={card.value}
-          suit={card.suit}
-          color={card.suit === "♣" || card.suit === "♠" ? "black" : "red"}
+          value={element.card.value}
+          suit={element.card.suit}
+          color={
+            element.card.suit === "♣" || element.card.suit === "♠"
+              ? "black"
+              : "red"
+          }
           isPlayerTurn={false}
           position={index}
         ></Card>

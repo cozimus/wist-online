@@ -71,17 +71,17 @@ const OpponentsSide = ({ gameInfo, playerId }) => {
         },
         {
           gridArea: "top-hand",
-          gridColumn: "1 / span 2",
+          gridColumn: "1 / span 3",
           transform: "rotate(+0deg)",
         },
         {
           gridArea: "top-hand",
-          gridColumn: "3 / span 2",
+          gridColumn: "4 / span 2",
           transform: "rotate(+0deg)",
         },
         {
           gridArea: "top-hand",
-          gridColumn: "5 / span 2",
+          gridColumn: "6 / span 3",
           transform: "rotate(+0deg)",
         },
         {
@@ -101,17 +101,15 @@ const OpponentsSide = ({ gameInfo, playerId }) => {
       {Array.from({ length: gameInfo.players.length - 1 }, (_, i) => (
         <div className="PlayerSpot" style={myComponentStyle[i]} key={i}>
           <span className="OpponentName">
-            {
-              gameInfo.players[(playerIndex + i + 1) % gameInfo.players.length]
-                .playerName
-            }
             {gameInfo.players[(playerIndex + i + 1) % gameInfo.players.length]
-              .call === 1
-              ? " BF "
-              : ""}
+              .call !== 1
+              ? gameInfo.players[
+                  (playerIndex + i + 1) % gameInfo.players.length
+                ].playerName
+              : "BF"}
             {gameInfo.players[(playerIndex + i + 1) % gameInfo.players.length]
               .roundPosition === gameInfo.playerTurn
-              ? " " + String.fromCodePoint("0x1F7E1")
+              ? String.fromCodePoint("0x1F7E1")
               : ""}
           </span>
           <OpponentHand

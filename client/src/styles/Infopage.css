@@ -1,0 +1,36 @@
+.Infopage {
+  padding: 10px;
+  overflow-y: scroll;
+  height: 100vh;
+  max-width: 100%;
+}
+.Infopage p {
+  font-size: clamp(12px, 5vh, 1.5rem);
+}
+.Infopage ul {
+  font-size: clamp(12px, 5vh, 1.5rem);
+  padding-left: 2rem;
+}
+.info-table {
+  table-layout: fixed;
+  border: 1px solid black;
+  border-spacing: 0;
+}
+.info-table th {
+  border: 1px solid black;
+  font-size: clamp(12px, 5vh, 1.5rem);
+}
+.info-table td {
+  border: 1px solid black;
+  text-align: center;
+  font-size: clamp(12px, 5vh, 1.5rem);
+}
+footer {
+  text-align: center;
+  font-size: clamp(12px, 5vh, 1.5rem);
+  /* background-color: red; */
+}
+footer a {
+  background-color: #ff9797;
+  padding: 0px 30px;
+}

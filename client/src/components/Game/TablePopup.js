@@ -1,6 +1,8 @@
 import TableRow from "../../utils/TableRow";
 import "../../styles/popups.css";
 import "../../styles/Table.css";
+import { socket } from "../../socket";
+
 const TablePopup = ({
   pointsTable,
   trigger,
@@ -8,7 +10,7 @@ const TablePopup = ({
   setGameStarted,
   setGameEnded,
   users,
-  socket,
+  currentRound,
 }) => {
   return trigger ? (
     <div className="table-popup popup">
@@ -34,6 +36,7 @@ const TablePopup = ({
                   key={player.playerId}
                   data={player.callAndPoints}
                   name={player.playerName}
+                  currentRound={currentRound}
                 ></TableRow>
               ))}
             </tbody>

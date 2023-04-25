@@ -8,6 +8,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: arial, sans-serif;
+  /* max-width: 100%; */
 }
 
 h1 {
@@ -97,6 +98,7 @@ input[type="text"] {
 }
 
 .Game {
+  overflow: hidden;
   user-select: none;
   margin: 0;
   display: grid;
@@ -131,10 +133,10 @@ input[type="text"] {
 .OpponentsSide {
   display: grid;
   grid-template-rows: 22vh 56vh;
-  grid-template-columns: repeat(6, 16.66vw);
+  grid-template-columns: 16.66vw 5vw 11.66vw 16.66vw 16.66vw 11.66vw 5vw 16.66vw;
   grid-template-areas:
-    "top-hand top-hand top-hand top-hand top-hand top-hand"
-    "left-hand field field field field right-hand";
+    "top-hand top-hand top-hand top-hand top-hand top-hand top-hand top-hand"
+    "left-hand left-hand field field field field right-hand right-hand";
   width: 100vw;
   height: 100%;
   justify-content: center;
@@ -150,6 +152,7 @@ input[type="text"] {
 .OpponentHand {
   display: flex;
   align-items: center;
+  padding-top: 11px;
 }
 .PlayerSpot {
   display: flex;
@@ -157,9 +160,8 @@ input[type="text"] {
   align-items: center;
 }
 .OpponentName {
-  padding: 5px;
-  /* height: calc(var(--CARD-WIDTH) / 3.4); */
-  font-size: calc(var(--CARD-WIDTH) / 2);
+  height: 2vw;
+  font-size: 2vw;
 }
 
 .PlayedCards {

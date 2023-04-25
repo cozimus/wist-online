@@ -1,4 +1,4 @@
-const TableRow = ({ data, name }) => {
+const TableRow = ({ data, name, currentRound }) => {
   const column = [];
   for (let i = 0; i < 7; i++) {
     column.push(
@@ -15,14 +15,10 @@ const TableRow = ({ data, name }) => {
         >
           {data.find((column) => column.round === i).call}
         </span>
-        <span
-          className={
-            "inf " +
-            (data.find((column) => column.round === i).points ? "" : "prese")
-          }
-        >
-          {data.find((column) => column.round === i).points ||
-            data.find((column) => column.round === i).prese}
+        <span className={"inf " + (currentRound === i ? "prese" : "")}>
+          {currentRound === i
+            ? data.find((column) => column.round === i).prese
+            : data.find((column) => column.round === i).points}
         </span>
       </td>
     );
@@ -34,14 +30,10 @@ const TableRow = ({ data, name }) => {
       </td>
       {column}
       <td>
-        <span
-          className={
-            "full " +
-            (data.find((column) => column.round === 7).points ? "" : "prese")
-          }
-        >
-          {data.find((column) => column.round === 7).points ||
-            data.find((column) => column.round === 7).prese}
+        <span className={"full " + (currentRound === 7 ? "prese" : "")}>
+          {currentRound === 7
+            ? data.find((column) => column.round === 7).prese
+            : data.find((column) => column.round === 7).points}
         </span>
       </td>
     </tr>

@@ -15,7 +15,7 @@ const CreateRoomForm = () => {
       host: true,
       ready: true,
     };
-    navigate(`/${roomId}`);
+    navigate(`/room/${roomId}`);
     socket.emit("create-room", userData);
   }
 
@@ -29,7 +29,7 @@ const CreateRoomForm = () => {
         placeholder="Player Name"
         id="hostName"
         name="hostName"
-        maxLength="20"
+        maxLength="16"
         value={hostName}
         onChange={(event) => setHostName(event.target.value)}
         required

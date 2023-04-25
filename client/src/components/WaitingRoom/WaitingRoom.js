@@ -1,6 +1,15 @@
+import { socket } from "../../socket";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+const WaitingRoom = ({ users }) => {
+  useEffect(() => {
+    if (
+      window.performance.getEntriesByType("navigation")[0].type === "reload"
+    ) {
+      window.location.href = "/";
+    }
+  });
 
-const WaitingRoom = ({ users, socket }) => {
   function isHost({ users, socket }) {
     let result;
     try {
