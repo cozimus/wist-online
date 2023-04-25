@@ -1,4 +1,4 @@
-import "../../styles/Infopage.css";
+import "../styles/Infopage.css";
 
 const Infopage = () => {
   return (

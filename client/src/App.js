@@ -2,11 +2,12 @@
 import { useState, useEffect } from "react";
 import { socket } from "./socket";
 import Homepage from "./components/Homepage/Homepage.js";
-import WaitingRoom from "./components/WaitingRoom/WaitingRoom.js";
+import WaitingRoom from "./components/WaitingRoom.js";
 import Game from "./components/Game/Game.js";
 import GameEnded from "./components/Game/GameEnded.js";
-import Records from "./components/Records/Records.js";
-import Infopage from "./components/Infopage/Infopage";
+import Records from "./components/Records.js";
+import Infopage from "./components/Infopage";
+import NoMatch from "./components/NoMatch";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
               )
             }
           ></Route>
+          <Route path="*" element={<NoMatch />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

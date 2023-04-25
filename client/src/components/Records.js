@@ -1,7 +1,7 @@
-import "../../styles/Records.css";
+import "../styles/Records.css";
 
 import { useState, useEffect } from "react";
-import createTables from "../../utils/getRecordTables";
+import createTables from "../utils/getRecordTables";
 
 const Records = () => {
   const [active, setActive] = useState("best-two-players");

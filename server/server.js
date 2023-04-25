@@ -28,10 +28,7 @@ socketConnection(io);
 app.get("/", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
-app.post("/", (req, res) => {
-  res.json({ message: "Hello from server!" });
-  console.log("sas");
-});
+
 app.post("/records", handleNewRecord);
 app.get("/records", getAllRecords);
 
