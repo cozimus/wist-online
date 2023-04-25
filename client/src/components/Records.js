@@ -10,8 +10,13 @@ const Records = () => {
   useEffect(() => {
     // fetch data
     const dataFetch = async () => {
+      const URL =
+        process.env.NODE_ENV === "production"
+          ? "https://wist-online-server.glitch.me"
+          : "http://localhost:4000";
+
       const data = await (
-        await fetch("http://localhost:4000/records", {
+        await fetch(URL + "/records", {
           method: "GET",
         })
       ).json();
