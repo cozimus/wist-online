@@ -48,12 +48,12 @@ const OpponentsSide = ({ gameInfo, playerId }) => {
         },
         {
           gridArea: "top-hand",
-          gridColumn: "1 / span 3",
+          gridColumn: "1 / span 4",
           transform: "rotate(+0deg)",
         },
         {
           gridArea: "top-hand",
-          gridColumn: "4 / span 3",
+          gridColumn: "5 / span 4",
           transform: "rotate(+0deg)",
         },
         {
