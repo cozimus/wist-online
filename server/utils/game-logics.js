@@ -126,7 +126,7 @@ function gameSetup(usersData) {
 
 function updateTurn(playedCard, playerId, roomId) {
   let gameInfo = gamesData.find((game) => game.roomId === roomId);
-  //if is a valid play (the player didn't played a card yet) do the stuff
+  //if it's a valid play (the player didn't played a card yet) do the stuff
   if (!gameInfo.playedCards.find((element) => element.playerId === playerId)) {
     //update player hand
     const dropIndex = gameInfo.players

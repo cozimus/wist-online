@@ -100,7 +100,7 @@ const Infopage = () => {
         <p>
           Il sesto round si chiama "La Leo", e qui purtroppo il nome non è di
           aiuto. In questo round, dopo la chiamata, si passano 2 carte al
-          giocatore successivo (alla propria sinistra) e se ricevono due da
+          giocatore successivo (alla propria sinistra) e se ne ricevono due da
           quello precedente (da destra).
         </p>
         <p>
