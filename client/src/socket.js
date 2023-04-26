@@ -5,4 +5,4 @@ const URL =
     ? "https://wist-online-server.glitch.me"
     : "http://localhost:4000";
 
-export const socket = io(URL, { closeOnBeforeunload: false });
+export const socket = io(URL);
