@@ -15,24 +15,24 @@ const tableHead = (
     </tr>
   </thead>
 );
-function bestSort(a, b) {
-  return a.score < b.score;
+function ascSort(a, b) {
+  return b.score - a.score;
 }
-function worstSort(a, b) {
-  return a.score > b.score;
+function descSort(a, b) {
+  return a.score - b.score;
 }
 
 function bestData(allData, players) {
   return allData
     .filter((game) => game.players === players)
-    .sort(bestSort)
+    .sort(ascSort)
     .slice(0, 5);
 }
 
 function worstData(allData, players) {
   return allData
     .filter((game) => game.players === players)
-    .sort(worstSort)
+    .sort(descSort)
     .slice(0, 5);
 }
 
@@ -59,6 +59,7 @@ function tableFromData(filteredData) {
 }
 
 function createTables(allData) {
+  console.log(allData.filter((game) => game.players === 6).sort(ascSort));
   return {
     best2PTable: tableFromData(bestData(allData, 2)),
     best3PTable: tableFromData(bestData(allData, 3)),
